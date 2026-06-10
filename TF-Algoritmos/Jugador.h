@@ -4,8 +4,11 @@
 ref class Jugador : public Entidad {
 private:
 	bool tDerecha, tIzquierda, tArriba, tAbajo;
+	int vida;
+	int confianza, conLengua, evidencia;
 public:
 	Jugador(int px, int py, int v) : Entidad(px, py, v) {
+		//Sprites
 		sprites = gcnew array<Sprite^>(9);
 		sprites[Quieto] = gcnew Sprite(gcnew Bitmap("sprites\\protagonista\\player_idle.png"), true);
 		sprites[Derecha] = gcnew Sprite(gcnew Bitmap("sprites\\protagonista\\player_walkingsheet_right.png"));
@@ -16,6 +19,12 @@ public:
 		sprites[Sureste] = gcnew Sprite(gcnew Bitmap("sprites\\protagonista\\player_walkingsheet_southeast.png"));
 		sprites[Noreste] = gcnew Sprite(gcnew Bitmap("sprites\\protagonista\\player_walkingsheet_northeast.png"));
 		sprites[Noroeste] = gcnew Sprite(gcnew Bitmap("sprites\\protagonista\\player_walkingsheet_northwest.png"));
+
+		//Otros
+		vida = 100;
+		confianza = 0;
+		conLengua = 0;
+		evidencia = 0;
 	}
 
 	void mover() override {
@@ -79,9 +88,17 @@ public:
 	void setTIzquierda(bool d) { tIzquierda = d; }
 	void setTArriba(bool d) { tArriba = d; }
 	void setTAbajo(bool d) { tAbajo = d; }
+	void setConfianza(int c) { confianza = c; }
+	void setConocimiento(int c) { conLengua = c; }
+	void setEvidencia(int c) { evidencia = c; }
+	void setVida(int c) { vida = c; }
 
 	bool getTDerecha() { return tDerecha; }
 	bool getTIzquierda() { return tIzquierda; }
 	bool getTAbajo() { return tAbajo; }
 	bool getTArriba() { return tArriba; }
+	int getConfianza() { return confianza; }
+	int getConocimiento() { return conLengua; }
+	int getEvidencia() { return evidencia; }
+	int getVida() { return vida; }
 };
