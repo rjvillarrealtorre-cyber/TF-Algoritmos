@@ -120,6 +120,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="VenCreditos.cpp" />
     <ClCompile Include="VenPrin.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -129,13 +130,26 @@
     <ClInclude Include="Juego.h" />
     <ClInclude Include="Jugador.h" />
     <ClInclude Include="Mapa.h" />
+    <ClInclude Include="MenuC.h" />
     <ClInclude Include="Nivel.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="VenCreditos.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="VenMenu.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="VenPrin.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="VenCreditos.resx">
+      <DependentUpon>VenCreditos.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VenMenu.resx">
+      <DependentUpon>VenMenu.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VenPrin.resx">
       <DependentUpon>VenPrin.h</DependentUpon>
     </EmbeddedResource>
