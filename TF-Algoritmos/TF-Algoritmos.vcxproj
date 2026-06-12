@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -124,7 +124,11 @@
     <ClCompile Include="VenPrin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArbolDialogo.h" />
+    <ClInclude Include="BuilderEntidadEstatica.h" />
+    <ClInclude Include="BuilderMapa.h" />
     <ClInclude Include="Entidad.h" />
+    <ClInclude Include="EntidadEstatica.h" />
     <ClInclude Include="Fuente.h" />
     <ClInclude Include="Hud.h" />
     <ClInclude Include="Juego.h" />

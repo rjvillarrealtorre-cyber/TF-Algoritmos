@@ -21,7 +21,7 @@ protected:
 	int direccionActual;
 public:
 	Entidad(int px, int py, int v) {
-		escala = 1.5;
+		escala = 1.6;
 		x = px; y = py;
 		velocidad = v;
 		moviendose = false;
@@ -80,4 +80,6 @@ public:
 
 	bool getMov() { return moviendose; }
 	char getDir() { return dirI; }
+	int getX() { return x; }
+	int getY() { return y; }
 };

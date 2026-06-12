@@ -107,7 +107,23 @@ namespace TFAlgoritmos {
 		case Keys::Down:
 			juego->getJugador()->setTAbajo(true);
 			break;
+		case Keys::E:
+			juego->setTeclaE(true);
+			break;
+		case Keys::D1:
+			juego->setTeclaOpciones(true, 1);
+			break;
+		case Keys::D2:
+			juego->setTeclaOpciones(true, 2);
+			break;
+		case Keys::D3:
+			juego->setTeclaOpciones(true, 3);
+			break;
+		case Keys::D4:
+			juego->setTeclaOpciones(true, 4);
+			break;
 		}
+
 	}
 	private: System::Void VenPrin_KeyUp(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 		switch (e->KeyCode) {
@@ -122,6 +138,21 @@ namespace TFAlgoritmos {
 			break;
 		case Keys::Down:
 			juego->getJugador()->setTAbajo(false);
+			break;
+		case Keys::E:
+			juego->setTeclaE(false);
+			break;
+		case Keys::D1:
+			juego->setTeclaOpciones(false, 1);
+			break;
+		case Keys::D2:
+			juego->setTeclaOpciones(false, 2);
+			break;
+		case Keys::D3:
+			juego->setTeclaOpciones(false, 3);
+			break;
+		case Keys::D4:
+			juego->setTeclaOpciones(false, 4);
 			break;
 		}
 	}
