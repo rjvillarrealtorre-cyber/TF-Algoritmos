@@ -28,7 +28,7 @@ private:
 	List<bool>^ teclasOpcionesAnterior;
 public:
 	Juego() {
-		jugador = gcnew Jugador(300, 250, 7);
+		jugador = gcnew Jugador(300, 250, 14);
 		niveles = gcnew List<Nivel^>();
 		fuente = gcnew Fuente();
 		contador = 0;
@@ -73,6 +73,9 @@ public:
 		jugador->mover();
 
 		jugador->mostrar(gr);
+
+		//Manejar cambio de mapa
+		niveles[nivelActual]->manejarCambioMapa(jugador, teclaE);
 
 		//Mostrar HUD
 		hud->mostrarHud(gr);

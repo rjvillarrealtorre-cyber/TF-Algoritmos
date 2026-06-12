@@ -132,15 +132,16 @@ public:
 						lineas[i]->ToCharArray()[j] == '.' || (lineas[i]->ToCharArray()[j] >= 65 && lineas[i]->ToCharArray()[j] <= 90) ||
 						lineas[i]->ToCharArray()[j] == ':') {
 						String^ caracter = gcnew String(lineas[i]->ToCharArray(), j, 1);
-						gr->DrawString(caracter, fuente, Brushes::Black, cuadro->X + centrarX + j * 5, cuadro->Y + centrarY + i * 18);
+						gr->DrawString(caracter, fuente, Brushes::Black, cuadro->X + centrarX + j * 10, cuadro->Y + centrarY + i * 18);
 					}
 					else if (randNum <= numConLengua) {
 						String^ caracter = gcnew String(lineas[i]->ToCharArray(), j, 1);
-						gr->DrawString(caracter, fuente, Brushes::Black, cuadro->X + centrarX + j * 5, cuadro->Y + centrarY + i * 18);
+						gr->DrawString(caracter, fuente, Brushes::Black, cuadro->X + centrarX + j * 10, cuadro->Y + centrarY + i * 18);
 					}
 					else {
-						gr->DrawString("?", fuente, Brushes::Black, cuadro->X + centrarX + j * 5, cuadro->Y + centrarY + i * 18);
+						gr->DrawString("?", fuente, Brushes::Black, cuadro->X + centrarX + j * 10, cuadro->Y + centrarY + i * 18);
 					}
+					alturaDialogo = cuadro->Y + centrarY + i * 18;
 				}
 			}
 			else {

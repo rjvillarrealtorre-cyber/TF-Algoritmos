@@ -11,12 +11,47 @@ Mapa^ setupMapa1Nivel1() {
     return mapa1;
 }
 
+Mapa^ setupMapa2Nivel1() {
+    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl1mapa2.jpg"));
+
+    mapa->agregarEntidadEstatica(setupNINivel1Mapa2Wilmer());
+    mapa->agregarEntidadEstatica(setupNINivel1Mapa2Rosa());
+    mapa->agregarEntidadEstatica(setupNINivel1Mapa2Kevin());
+    mapa->agregarEntidadEstatica(setupNINivel1Mapa2Tomas());
+
+    return mapa;
+}
+
+Mapa^ setupMapa3Nivel1() {
+    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl1mapa3.png"));
+
+    mapa->agregarEntidadEstatica(setupNINivel1Mapa3Elena());
+    mapa->agregarEntidadEstatica(setupNINivel1Mapa3Silvia());
+    mapa->agregarEntidadEstatica(setupNINivel1Mapa3Clara());
+
+    return mapa;
+}
+
+Mapa^ setupMapa4Nivel1() {
+    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl1mapa4.jpg"));
+
+    mapa->agregarEntidadEstatica(setupNINivel1Mapa4Timoteo());
+    mapa->agregarEntidadEstatica(setupNINivel1Mapa4Jeremias());
+    mapa->agregarEntidadEstatica(setupNINivel1Mapa4Maza());
+
+    return mapa;
+}
+
+
 Nivel^ setupNivel1() {
     // ------------------- Final ----------------
 
     Nivel^ nvl = gcnew Nivel();
 
     nvl->agregarMapa(setupMapa1Nivel1());
+    nvl->agregarMapa(setupMapa2Nivel1());
+    nvl->agregarMapa(setupMapa3Nivel1());
+    nvl->agregarMapa(setupMapa4Nivel1());
 
     //nvl->adjuntarCinematica({ setupCinNvl1Inicio(), setupCinNvl1Final() });
 

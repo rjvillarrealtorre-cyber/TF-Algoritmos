@@ -77,6 +77,7 @@ public:
 
 	void setDir(char d) { dirI = d; }
 	void setMov(bool d) { moviendose = d; }
+	void setX(int px) { x = px; }
 
 	bool getMov() { return moviendose; }
 	char getDir() { return dirI; }

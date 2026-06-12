@@ -26,6 +26,17 @@ public:
 		mapas->Add(mapaAgregar);
 	}
 
+	void manejarCambioMapa(Jugador^ jugador, bool teclaE) {
+		if (jugador->getX() > 800 && teclaE && mapaActual < mapas->Count - 1) {
+			jugador->setX(50);
+			mapaActual++;
+		}
+		else if (jugador->getX() < 50 && teclaE && mapaActual > 0) {
+			jugador->setX(850);
+			mapaActual--;
+		}
+	}
+
 	List<Mapa^>^ getMapas() { return mapas; }
 	int getMapaActual() { return mapaActual; }
 };
