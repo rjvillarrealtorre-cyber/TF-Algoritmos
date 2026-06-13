@@ -55,6 +55,11 @@ public:
 	}
 
 	void manejarBuclePrincipal(Graphics^ gr) {
+		//Cinematicas
+		niveles[nivelActual]->mostrarCinematica(gr, fuente->getFuenteFinal(), false, jugador->getTDerecha(),
+			jugador->getTDerechaAnterior(), jugador->getTIzquierda(), 
+			jugador->getTIzquierdaAnterior(), jugador->getTeclaEscape());
+		if (niveles[nivelActual]->getCinematicas()[niveles[nivelActual]->getNumCinem()]->getEnCinematica()) return;
 		//Borrar todo -- FINAL
 		gr->Clear(Color::Black);
 		niveles[nivelActual]->getMapas()[niveles[nivelActual]
@@ -86,6 +91,8 @@ public:
 
 		//Otros
 		for (int i = 0; i < 4; i++) teclasOpcionesAnterior[i] = teclasOpciones[i];
+		jugador->setTDerechaAnterior(jugador->getTDerecha());
+		jugador->setTIzquierdaAnterior(jugador->getTIzquierda());
 		contador++;
 	}
 

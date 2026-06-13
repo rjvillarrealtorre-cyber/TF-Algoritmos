@@ -125,8 +125,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArbolDialogo.h" />
+    <ClInclude Include="BuilderCinematicas.h" />
     <ClInclude Include="BuilderEntidadEstatica.h" />
     <ClInclude Include="BuilderMapa.h" />
+    <ClInclude Include="Cinematica.h" />
     <ClInclude Include="Entidad.h" />
     <ClInclude Include="EntidadEstatica.h" />
     <ClInclude Include="Fuente.h" />

@@ -122,6 +122,9 @@ namespace TFAlgoritmos {
 		case Keys::D4:
 			juego->setTeclaOpciones(true, 4);
 			break;
+		case Keys::Escape:
+			juego->getJugador()->setTeclaEscape(true);
+			break;
 		}
 
 	}
@@ -153,6 +156,9 @@ namespace TFAlgoritmos {
 			break;
 		case Keys::D4:
 			juego->setTeclaOpciones(false, 4);
+			break;
+		case Keys::Escape:
+			juego->getJugador()->setTeclaEscape(false);
 			break;
 		}
 	}

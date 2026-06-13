@@ -4,6 +4,8 @@
 ref class Jugador : public Entidad {
 private:
 	bool tDerecha, tIzquierda, tArriba, tAbajo;
+	bool tDerechaAnterior, tIzquierdaAnterior;
+	bool tEscape;
 	int vida;
 	int confianza, conLengua, evidencia;
 public:
@@ -25,6 +27,8 @@ public:
 		confianza = 0;
 		conLengua = 0;
 		evidencia = 0;
+		tEscape = false;
+		tDerechaAnterior = tIzquierdaAnterior = false;
 	}
 
 	void mover() override {
@@ -88,17 +92,23 @@ public:
 	void setTIzquierda(bool d) { tIzquierda = d; }
 	void setTArriba(bool d) { tArriba = d; }
 	void setTAbajo(bool d) { tAbajo = d; }
+	void setTDerechaAnterior(bool d) { tDerechaAnterior = d; }
+	void setTIzquierdaAnterior(bool d) { tIzquierdaAnterior = d; }
 	void setConfianza(int c) { confianza = c; }
 	void setConocimiento(int c) { conLengua = c; }
 	void setEvidencia(int c) { evidencia = c; }
 	void setVida(int c) { vida = c; }
+	void setTeclaEscape(bool c) { tEscape = c; }
 
 	bool getTDerecha() { return tDerecha; }
 	bool getTIzquierda() { return tIzquierda; }
 	bool getTAbajo() { return tAbajo; }
 	bool getTArriba() { return tArriba; }
+	bool getTDerechaAnterior() { return tDerechaAnterior; }
+	bool getTIzquierdaAnterior() { return tIzquierdaAnterior; }
 	int getConfianza() { return confianza; }
 	int getConocimiento() { return conLengua; }
 	int getEvidencia() { return evidencia; }
 	int getVida() { return vida; }
+	bool getTeclaEscape() { return tEscape; }
 };

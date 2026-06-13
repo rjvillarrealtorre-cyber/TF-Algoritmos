@@ -1,6 +1,7 @@
 #pragma once
 #include "Mapa.h"
 #include "Nivel.h"
+#include "BuilderCinematicas.h"
 #include "BuilderEntidadEstatica.h"
 
 Mapa^ setupMapa1Nivel1() {
@@ -53,7 +54,7 @@ Nivel^ setupNivel1() {
     nvl->agregarMapa(setupMapa3Nivel1());
     nvl->agregarMapa(setupMapa4Nivel1());
 
-    //nvl->adjuntarCinematica({ setupCinNvl1Inicio(), setupCinNvl1Final() });
+    nvl->agregarCinematica(setupCinNvl1Inicio());
 
     return nvl;
 }
