@@ -55,6 +55,7 @@ Nivel^ setupNivel1() {
     nvl->agregarMapa(setupMapa4Nivel1());
 
     nvl->agregarCinematica(setupCinNvl1Inicio());
+    nvl->agregarCinematica(setupCinNvl1Final());
 
     return nvl;
 }

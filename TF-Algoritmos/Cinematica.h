@@ -53,6 +53,11 @@ public:
 	void mostrarSlide(Graphics^ gr, Font^ fuente) {
 		gr->Clear(Color::Black);
 
+		if (numSlide == 0) {
+			gr->DrawImage(cinematica[numSlide]->getImg(), 88, 0, 1024, 514);
+			return;
+		}
+
 		Bitmap^ perga = gcnew Bitmap("sprites\\otros\\papel_cinem.jpg");
 		gr->DrawImage(perga, -10, -10, 540, 534);
 
@@ -95,6 +100,7 @@ public:
 		}
 	}
 
+	void setEnCinematica(bool p) { enCinematica = p; }
 	bool getEnCinematica() { return enCinematica; }
 
 	bool getSeDibujaraFondoMapa() { return seDibujaraFondoMapa; }

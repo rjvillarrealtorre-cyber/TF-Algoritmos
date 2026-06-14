@@ -52,22 +52,30 @@ public:
 		return false;
 	}
 
-	void manejarDialogo(Graphics^ gr, Jugador^ jugador, Font^ fuente, bool teclaE, List<bool>^ teclaOpciones, List<bool>^ teclaOpcionesAnterior) {
+	bool manejarDialogo(Graphics^ gr, Jugador^ jugador, Font^ fuente, bool teclaE, List<bool>^ teclaOpciones, List<bool>^ teclaOpcionesAnterior) {
 		if (determinarCercania(jugador) && teclaE)
 			mostrandoCuadroDialogo = true;
+
+		bool aa = false;
 
 		if (mostrandoCuadroDialogo) {
 			mostrarCuadroDialogo(gr);
 			arbol->mostrarDialogo(gr, fuente, coordCuadro, 0);
-			arbol->manejarFlujoInteraccion(gr, fuente, coordCuadro, teclaE, teclaOpciones, teclaOpcionesAnterior, jugador);
+			aa = arbol->manejarFlujoInteraccion(gr, fuente, coordCuadro, teclaE, teclaOpciones, teclaOpcionesAnterior, jugador);
 		}
 		
 		if(!determinarCercania(jugador)) mostrandoCuadroDialogo = false;
+
+		return aa;
 	}
 
-	void manejar(Graphics^ gr, Jugador^ jugador, Font^ fuente, bool teclaE, List<bool>^ teclaOpciones, List<bool>^ teclaOpcionesAnterior) {
+	bool manejar(Graphics^ gr, Jugador^ jugador, Font^ fuente, bool teclaE, List<bool>^ teclaOpciones, List<bool>^ teclaOpcionesAnterior) {
 		mostrarInteractuar(gr);
-		manejarDialogo(gr, jugador, fuente, teclaE, teclaOpciones, teclaOpcionesAnterior);
+		bool aa = manejarDialogo(gr, jugador, fuente, teclaE, teclaOpciones, teclaOpcionesAnterior);
 		mostrar(gr);
+
+		return aa;
 	}
+
+	ArbolDialogo^ getArbol() { return arbol; }
 };

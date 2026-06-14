@@ -18,6 +18,7 @@ private:
 	Hud^ hud;
 	List<Nivel^>^ niveles;
 	int nivelActual;
+	bool puedeAcabarNivel = false;
 
 	Fuente^ fuente;
 	int contador;
@@ -54,12 +55,48 @@ public:
 		
 	}
 
+	void acabarNivel() {
+		if (!puedeAcabarNivel) return;
+		// if (nivelActual + 1 >= niveles->Count) return;
+
+		if (niveles[nivelActual]->getCinematicas()->Count == 2)
+			niveles[nivelActual]->getCinematicas()[1]->setEnCinematica(true);
+
+		if (niveles[nivelActual]->getCinematicas()[1]->getEnCinematica()) return;
+
+		nivelActual++;
+
+		if (nivelActual == 1) {
+			jugador->setX(50);
+			jugador->setY(50);
+		}
+
+		if (niveles[nivelActual]->getCinematicas()->Count == 2)
+			niveles[nivelActual]->getCinematicas()[1]->setEnCinematica(false);
+
+
+		puedeAcabarNivel = false;
+	}
+
+	void manejarCinematicas(Graphics^ gr, bool esFinal) { // 0 = inicial / 1 = final
+		int numeroActual = esFinal ? nivelActual - 1 : nivelActual;
+		if (nivelActual <= 0) return;
+
+		niveles[numeroActual]->mostrarCinematica(gr, fuente->getFuenteFinal(), false, jugador->getTDerecha(),
+			jugador->getTDerechaAnterior(), jugador->getTIzquierda(),
+			jugador->getTIzquierdaAnterior(), jugador->getTeclaEscape());
+		if (niveles[numeroActual]->getCinematicas()[numeroActual]->getEnCinematica()) return;
+	}
+
 	void manejarBuclePrincipal(Graphics^ gr) {
-		//Cinematicas
-		niveles[nivelActual]->mostrarCinematica(gr, fuente->getFuenteFinal(), false, jugador->getTDerecha(),
+		//Cinematica
+		acabarNivel();
+		int numCinActual = puedeAcabarNivel ? 1 : 0;
+
+		niveles[nivelActual]->mostrarCinematica(gr, fuente->getFuenteFinal(), puedeAcabarNivel, jugador->getTDerecha(),
 			jugador->getTDerechaAnterior(), jugador->getTIzquierda(), 
 			jugador->getTIzquierdaAnterior(), jugador->getTeclaEscape());
-		if (niveles[nivelActual]->getCinematicas()[niveles[nivelActual]->getNumCinem()]->getEnCinematica()) return;
+		if (niveles[nivelActual]->getCinematicas()[numCinActual]->getEnCinematica()) return;
 		//Borrar todo -- FINAL
 		gr->Clear(Color::Black);
 		niveles[nivelActual]->getMapas()[niveles[nivelActual]
@@ -67,10 +104,10 @@ public:
 		// ------------ ENTIDADES -----------
 
 		//Entidad estática
-		// Nota: Experimental. Hecho por Github Copilot (IA)
 		for each (EntidadEstatica ^ ee in niveles[nivelActual]->getMapas()[niveles[nivelActual]
 			->getMapaActual()]->getEntEstaticas()) {
-			ee->manejar(gr, jugador, fuente->getFuenteFinal(), teclaE, teclasOpciones, teclasOpcionesAnterior);
+			bool aa = ee->manejar(gr, jugador, fuente->getFuenteFinal(), teclaE, teclasOpciones, teclasOpcionesAnterior);
+			if (aa) puedeAcabarNivel = true;;
 		}
 
 		//Jugador

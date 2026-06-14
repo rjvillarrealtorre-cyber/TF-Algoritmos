@@ -24,7 +24,7 @@ public:
 
 		//Otros
 		vida = 100;
-		confianza = 0;
+		confianza = 100;
 		conLengua = 0;
 		evidencia = 0;
 		tEscape = false;

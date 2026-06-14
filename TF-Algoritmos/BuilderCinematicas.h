@@ -5,6 +5,10 @@ Cinematica^ setupCinNvl1Inicio() {
 	Cinematica^ cin = gcnew Cinematica();
 
 	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8""
+	}), gcnew Bitmap("sprites\\cinematicas\\inicionvl1.jpeg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
 		u8"“Remontar ese río era como viajar de regreso",
 		u8" a los primeros orígenes del mundo,   cuando",
 		u8" la vegetación se  desbordaba  sobre la tie-",
@@ -185,6 +189,205 @@ Cinematica^ setupCinNvl1Inicio() {
 			u8" lucione al poco elegante arte de los puños?"
 	}), gcnew Bitmap("sprites\\cinematicas\\nvl1slidefinal.jpg"));
 
+
+	return cin;
+}
+
+Cinematica^ setupCinNvl1Final() {
+	Cinematica^ cin = gcnew Cinematica();
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8""
+	}), gcnew Bitmap("sprites\\cinematicas\\finnvl1.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" La brisa sopla, meciendo los árboles, los",
+			u8" arbustos y la maleza. Un manto dorado cubre",
+			u8" el pasto donde estoy reposando. Es el cre-",
+			u8" púsculo. En menos de una hora, el sol se",
+			u8" esconderá completamente, abriendo paso a la",
+			u8" luna, cumpliendo la eterna pero necesaria",
+			u8" dualidad entre la luz y la oscuridad. Miro",
+			u8" al horizonte. Siento que la naturaleza me",
+			u8" susurra, me atrapa, me seduce. ¿Y si de ver-",
+			u8" dad las plantas tienen alma? Me pregunto,",
+			u8" mientras fumo un poco del tabaco que el",
+			u8" Abuelo Tomás me dio esa misma mañana."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide1.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" Ahí es cuando siento una presencia detrás",
+			u8" de mí. Antes de que pueda reaccionar, siento",
+			u8" una mano en mi hombro. Alzo la mirada. Re-",
+			u8" conozco inmediatamente ese rostro. Es Wil-",
+			u8" mer. Está más cansado que cuando lo vi por",
+			u8" primera vez, esa misma mañana, pero hay una",
+			u8" extrañeza en su faz. Un sutil, traicionero,",
+			u8" rayo de esperanza. Se me queda observando",
+			u8" por un largo intervalo, hasta que rompe el",
+			u8" silencio."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide2.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" WILMER: Le caíste bien a Doña Rosa. Mamá",
+			u8" Clara preguntó por ti. Don Tomás dice que",
+			u8" sabes escuchar. Estoy sorprendido...",
+			u8"",
+			u8" Eso es raro en un forastero."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide2.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" Hace una pausa, dudando si cruzar el umbral",
+			u8" del que jamás regresará.",
+			u8"",
+			u8" WILMER: El Abuelo Evaristo quiere verte."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide3.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" Caminamos un largo sendero en total silen-",
+			u8" cio. No es la lúgubre carencia de sonido de",
+			u8" las interminables noches de viaje. Es algo",
+			u8" diferente. Lleno en su flaqueza. Los últimos",
+			u8" sonidos distantes, los murmullos, los gri-",
+			u8" tos, la indiscutible VIDA de un pueblo que",
+			u8" se niega a fenecer, desaparecen a nuestras",
+			u8" espaldas. Y la naturaleza, tan atenta, pa-",
+			u8" rece notar este hecho."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide4.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" WILMER: Don Evaristo es el líder del pueblo.",
+			u8" Él es el último que lo recuerda todo. Nues-",
+			u8" tra fundación. Los nombres de nuestros an-",
+			u8" cestros. Los lugares donde solíamos pescar",
+			u8" y cosechar nuestros cultivos. Los cantos",
+			u8" tradicionales y los rituales que abundaban",
+			u8" antes que llegaran los madereros.",
+			u8"",
+			u8" Por eso es que le tenemos tanto respeto.",
+			u8" Porque es la personificación del pueblo. Si",
+			u8" él se va, todo el pueblo se va con él."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide5.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" MATEO: ¿Y por qué no se lo enseña todo lo",
+			u8" que sabe a la juventud? Al fin y al cabo,",
+			u8" alguna vez él también fue joven. Y no hay",
+			u8" regalo más grande que dar la responsabili-",
+			u8" dad de la supervivencia de un pueblo a las",
+			u8" futuras generaciones."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide6.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" WILMER: Antes había comunión con la natura-",
+			u8" leza. El hombre y la tierra eran uno. No se",
+			u8" parasitaba. Se daba y se recibía. Y fue así",
+			u8" por siglos. Y gracias a ello, es que nuestro",
+			u8" pueblo se mantuvo saludable.",
+			u8"",
+			u8" Pero con los madereros, eso se rompió. Los",
+			u8" jóvenes nacieron desarraigados. Rechazan la",
+			u8" tierra, porque la tierra, ellos creen, los",
+			u8" rechazó. Y ellos se van. O trabajan para",
+			u8" ellos. O simplemente mueren muy jóvenes.",
+			u8"",
+			u8" Y los que quedamos... estamos cansados."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide6.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" El sendero desemboca en un claro. Allí, so-",
+			u8" litaria, hay una ceiba gigante. Mi vida en",
+			u8" Lima pasa por mi mente al verla. Es tan al-",
+			u8" ta como esos edificios residenciales que",
+			u8" abundan en San Isidro o en Jesús María. Y",
+			u8" es tan ancha que se necesitaría más de cinco",
+			u8" hombres para abrazarla."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide7.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" Al costado, una cabaña de madera. Y un te-",
+			u8" cho de palma. Es pequeña, pero bien cuida-",
+			u8" da. Y mentiría si digo que no sentí un esta-",
+			u8" llido de emociones al verla. Tiene ese aire",
+			u8" peculiar de los lugares que sienten, que",
+			u8" recuerdan millares de recuerdos, de cuitas,",
+			u8" de alegrías."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide7.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" De la chimenea sale un humo blanco. Y lo",
+			u8" puedo distinguir. Huele a tabaco. Quizás",
+			u8" sea el mismo que me dio Don Tomás, y el cual",
+			u8" aún no había acabado."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide7.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" WILMER: Esta parte es tuya, Mateo. Yo no",
+			u8" puedo entrar contigo.",
+			u8"",
+			u8" Su mirada, furtiva, logra fijarse en mi",
+			u8" ser. Hay una advertencia en sus ojos."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide7.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" WILMER: No le mientas. No le prometas nada",
+			u8" que no vayas a cumplir. Y sobre todo, escu-",
+			u8" cha. Es lo que más nos falta a todos, des-",
+			u8" pués de todo."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide7.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" Wilmer se aparta. Estoy completamente solo",
+			u8" ante el peligroso umbral. ¿Pero qué es mi",
+			u8" vida sin este tipo de exaltación? A lo lar-",
+			u8" go de mi vida, he aprendido a vivir peli-",
+			u8" grosamente. Y es lo que me ha llevado hasta",
+			u8" donde estoy.",
+			u8"",
+			u8" Pero nunca, nunca, me había sentido tan...",
+			u8" débil. Sabía cómo controlar mis nervios",
+			u8" ante las amenazas, las extorsiones y los",
+			u8" ataques bajos. Pero nunca había lidiado",
+			u8" con mi propia incertidumbre..."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide8.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" Volteo la cabeza. Wilmer ha desaparecido.",
+			u8" Recuerdo los anteriores reportajes. Aquel",
+			u8" reporte de la minería ilegal en Pasco, y",
+			u8" del cual volví con una historia indiscu-",
+			u8" tible, y después del cual me llovieron",
+			u8" muchos agradecimientos en forma de casqui-",
+			u8" llos de bala en mi puerta.",
+			u8"",
+			u8" Ya estaba acostumbrado al riesgo... Y vol-",
+			u8" ví a confirmar que este riesgo era dife-",
+			u8" rente. Pensé: ¿Cuál es la diferencia?"
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide8.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" La respuesta estaba alrededor, detrás, y",
+			u8" frente mío. El costo social. La admiración",
+			u8" genuina y el asombro causado por la tena-",
+			u8" cidad de un pueblo, de la sabiduría de sus",
+			u8" líderes... y un pesar ahogante por el su-",
+			u8" frimiento de Kipatsi..."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide8.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" No lo pienso más. Empujo la puerta, la cual",
+			u8" había sido dejada convenientemente entre-",
+			u8" abierta. Las bisagras gimen ante mi inva-",
+			u8" sión."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide9.jpg"));
+
+	cin->agregarSlide(gcnew List<String^>(gcnew array<String^> {
+		u8" EVARISTO: Pasa, periodista. Te estábamos",
+			u8" esperando.",
+			u8"",
+			u8" No lo logro ver. Pero sé que está ahí.",
+			u8" Que... ellos están allí."
+	}), gcnew Bitmap("sprites\\cinematicas\\nvl1fslide9.jpg"));
 
 	return cin;
 }
