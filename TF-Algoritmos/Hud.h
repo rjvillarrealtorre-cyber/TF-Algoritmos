@@ -1,4 +1,5 @@
 #pragma once
+#include "Utilidades.h"
 
 using namespace System;
 
@@ -19,7 +20,7 @@ public:
 	}
 
 	void mostrarDatos(Graphics^ gr, Font^ fuente, 
-		Jugador^ jugador, int nivelActual, int contador, int tiempoSleep) {
+		Jugador^ jugador, int nivelActual, int contador, int TIEMPO_SLEEP) {
 		int separacionLineas = 45;
 
 		String^ vida = "[Vida]: " + jugador->getVida();
@@ -63,8 +64,15 @@ public:
 			965, separacionLineas + separacionLineas * 4
 		);
 
-		int segundos = static_cast<int>(((tiempoSleep * 1.0 / 1000) * contador)) % 60;
-		int minutos = ((tiempoSleep * 1.0 / 1000) * contador) / 60;
+		gr->DrawString(
+			"[Semillas]: " + jugador->getSemillas() + "",
+			fuente,
+			Brushes::White,
+			965, separacionLineas + separacionLineas * 5
+		);
+
+		int segundos = static_cast<int>((CONVERSOR_SEG * contador)) % 60;
+		int minutos = (CONVERSOR_SEG * contador) / 60;
 		String^ segMostrar = segundos < 10 ? "0" + segundos : "" + segundos;
 		String^ minMostrar = minutos < 10 ? "0" + minutos : "" + minutos;
 
@@ -73,7 +81,7 @@ public:
 			Tiempo,
 			fuente,
 			Brushes::White,
-			965, separacionLineas + separacionLineas * 5
+			965, separacionLineas + separacionLineas * 6
 		);
 
 		// ¿Debería hacerlo?

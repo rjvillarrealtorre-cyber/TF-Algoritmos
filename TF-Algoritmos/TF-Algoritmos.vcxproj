@@ -124,10 +124,11 @@
     <ClCompile Include="VenPrin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Arbol.h" />
     <ClInclude Include="ArbolDialogo.h" />
     <ClInclude Include="BuilderCinematicas.h" />
     <ClInclude Include="BuilderEntidadEstatica.h" />
-    <ClInclude Include="BuilderMapa.h" />
+    <ClInclude Include="BuilderNivel.h" />
     <ClInclude Include="Cinematica.h" />
     <ClInclude Include="Entidad.h" />
     <ClInclude Include="EntidadEstatica.h" />
@@ -139,6 +140,7 @@
     <ClInclude Include="MenuC.h" />
     <ClInclude Include="Nivel.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Utilidades.h" />
     <ClInclude Include="VenCreditos.h">
       <FileType>CppForm</FileType>
     </ClInclude>

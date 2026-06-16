@@ -8,7 +8,7 @@
 #include "Nivel.h"
 
 // BUILDERS
-#include "BuilderMapa.h"
+#include "BuilderNivel.h"
 
 using namespace System::Collections::Generic;
 
@@ -18,11 +18,12 @@ private:
 	Hud^ hud;
 	List<Nivel^>^ niveles;
 	int nivelActual;
-	bool puedeAcabarNivel = false;
+	bool puedeAcabarNivel;
+	bool cinFinalIniciada;
 
 	Fuente^ fuente;
 	int contador;
-	int tiempoSleep;
+	int TIEMPO_SLEEP;
 
 	bool teclaE;
 	List<bool>^ teclasOpciones;
@@ -33,15 +34,18 @@ public:
 		niveles = gcnew List<Nivel^>();
 		fuente = gcnew Fuente();
 		contador = 0;
-		tiempoSleep = 75;
+		TIEMPO_SLEEP = 75;
 		teclaE = false;
+		puedeAcabarNivel = false;
+		cinFinalIniciada = false;
 		teclasOpciones = gcnew List<bool>(
 			gcnew array<bool> {false, false, false, false});
 		teclasOpcionesAnterior = gcnew List<bool>(
 			gcnew array<bool> {false, false, false, false});
 
 		//Setup FINAL
-		niveles->Add(setupNivel1());
+		//niveles->Add(setupNivel1());
+		niveles->Add(setupNivel2());
 
 		hud = gcnew Hud();
 	}
@@ -59,10 +63,14 @@ public:
 		if (!puedeAcabarNivel) return;
 		// if (nivelActual + 1 >= niveles->Count) return;
 
-		if (niveles[nivelActual]->getCinematicas()->Count == 2)
+		if (!cinFinalIniciada &&
+			niveles[nivelActual]->getCinematicas()->Count == 2)
+		{
 			niveles[nivelActual]->getCinematicas()[1]->setEnCinematica(true);
-
-		if (niveles[nivelActual]->getCinematicas()[1]->getEnCinematica()) return;
+			cinFinalIniciada = true;
+		}
+		if (niveles[nivelActual]->getCinematicas()[1]->getEnCinematica() &&
+			!niveles[nivelActual]->getCinematicas()[1]->getTerminado()) return;
 
 		nivelActual++;
 
@@ -70,10 +78,6 @@ public:
 			jugador->setX(50);
 			jugador->setY(50);
 		}
-
-		if (niveles[nivelActual]->getCinematicas()->Count == 2)
-			niveles[nivelActual]->getCinematicas()[1]->setEnCinematica(false);
-
 
 		puedeAcabarNivel = false;
 	}
@@ -110,7 +114,14 @@ public:
 			if (aa) puedeAcabarNivel = true;;
 		}
 
+		//Arboles (nivel 2)
+		for each (Arbol ^ arbol in jugador->getArboles()) {
+			arbol->manejarCrecimiento(gr, fuente->getFuenteFinal());
+			arbol->mostrar(gr);
+		}
+
 		//Jugador
+		jugador->plantarArbol(teclaE);
 		jugador->manejarMovimiento();
 		jugador->mover();
 
@@ -123,7 +134,7 @@ public:
 		hud->mostrarHud(gr);
 		hud->mostrarDatos(
 			gr, fuente->getFuenteFinal(), jugador,
-			nivelActual, contador, tiempoSleep
+			nivelActual, contador, TIEMPO_SLEEP
 		);
 
 		//Otros

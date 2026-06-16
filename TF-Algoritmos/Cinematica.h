@@ -30,14 +30,14 @@ private:
 	int numSlide;
 	bool enCinematica;
 	bool dibujadoPrimeraVez;
-	bool seDibujaraFondoMapa;
+	bool terminado;
 public:
 	Cinematica() {
 		cinematica = gcnew List<Slide^>();
 		numSlide = 0;
 		enCinematica = true;
 		dibujadoPrimeraVez = false;
-		seDibujaraFondoMapa = false;
+		terminado = false;
 	}
 
 	~Cinematica() {
@@ -83,7 +83,7 @@ public:
 		if (tDerecha && !tDerechaAnterior) {
 			if (numSlide >= cinematica->Count - 1) {
 				enCinematica = false;
-				seDibujaraFondoMapa = true;
+				terminado = true;
 			}
 			else {
 				numSlide++;
@@ -96,15 +96,15 @@ public:
 		}
 		else if (tEscape) {
 			enCinematica = false;
-			seDibujaraFondoMapa = true;
+			terminado = true;
 		}
 	}
 
 	void setEnCinematica(bool p) { enCinematica = p; }
 	bool getEnCinematica() { return enCinematica; }
 
-	bool getSeDibujaraFondoMapa() { return seDibujaraFondoMapa; }
-	void setSeDibujaraFondoMapa(bool p) { seDibujaraFondoMapa = p; }
+	bool getTerminado() { return terminado; }
+	void setTerminado(bool p) { terminado = p; }
 
 	bool getDibujadoPrimeraVez() { return dibujadoPrimeraVez; }
 	void setDibujadoPrimeraVez(bool p) { dibujadoPrimeraVez = p; }

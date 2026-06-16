@@ -1,5 +1,9 @@
 #pragma once
 #include "Entidad.h"
+#include "Arbol.h"
+
+using namespace System;
+using namespace System::Collections::Generic;
 
 ref class Jugador : public Entidad {
 private:
@@ -8,6 +12,11 @@ private:
 	bool tEscape;
 	int vida;
 	int confianza, conLengua, evidencia;
+	//Nivel 2
+	int semillas;
+	List<Arbol^>^ arboles;
+	//Nivel 3
+	bool enBote;
 public:
 	Jugador(int px, int py, int v) : Entidad(px, py, v) {
 		//Sprites
@@ -29,6 +38,33 @@ public:
 		evidencia = 0;
 		tEscape = false;
 		tDerechaAnterior = tIzquierdaAnterior = false;
+		semillas = 5;
+		enBote = false;
+		arboles = gcnew List<Arbol^>();
+	}
+
+	~Jugador() {
+		for each (Arbol ^ ar in arboles) delete ar;
+		delete arboles;
+	}
+
+	void plantarArbol(bool teclaE) {
+		if (!teclaE || semillas <= 0) return;
+
+		if (direccionActual == Derecha || direccionActual == Sureste || direccionActual == Noreste) { // falta restriccion por parcelas
+			arboles->Add(gcnew Arbol(x + sprites[0]->ancho + 5, y + sprites[0]->alto / 2));
+		}
+		else if (direccionActual == Izquierda || direccionActual == Suroeste || direccionActual == Noroeste) {
+			arboles->Add(gcnew Arbol(x - 5, y + sprites[0]->alto / 2));
+		}
+		else if (direccionActual == Arriba) {
+			arboles->Add(gcnew Arbol(x + sprites[0]->ancho / 2, y - 5));
+		}
+		else {
+			arboles->Add(gcnew Arbol(x + sprites[0]->ancho / 2, y + sprites[0]->alto + 5));
+		}
+
+		semillas--;
 	}
 
 	void mover() override {
@@ -99,6 +135,8 @@ public:
 	void setEvidencia(int c) { evidencia = c; }
 	void setVida(int c) { vida = c; }
 	void setTeclaEscape(bool c) { tEscape = c; }
+	void setSemillas(int c) { semillas = c; }
+	void setEnBote(bool p) { enBote = p; }
 
 	bool getTDerecha() { return tDerecha; }
 	bool getTIzquierda() { return tIzquierda; }
@@ -111,4 +149,7 @@ public:
 	int getEvidencia() { return evidencia; }
 	int getVida() { return vida; }
 	bool getTeclaEscape() { return tEscape; }
+	int getSemillas() { return semillas; }
+	bool getEnBote() { return enBote; }
+	List<Arbol^>^ getArboles() { return arboles; }
 };

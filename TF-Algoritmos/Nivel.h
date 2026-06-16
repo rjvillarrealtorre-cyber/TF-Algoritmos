@@ -65,10 +65,10 @@ public:
 			cinematicas[numCinem]->manejarCambioSlide(gr, fuente, tDerecha, tDerechaAnterior, tIzquierda, tIzquierdaAnterior, tEscape);
 		}
 
-		if (cinematicas[numCinem]->getSeDibujaraFondoMapa()) {
+		if (cinematicas[numCinem]->getTerminado()) {
 			gr->Clear(Color::Black);
 			mapas[mapaActual]->dibujarFondo(gr);
-			cinematicas[numCinem]->setSeDibujaraFondoMapa(false);
+			cinematicas[numCinem]->setTerminado(false);
 		}
 	}
 

@@ -40,7 +40,7 @@ public:
 
 	virtual void mover() = 0;
 
-	void mostrar(Graphics^ gr) {
+	virtual void mostrar(Graphics^ gr) {
 		determinarIntPorDireccion();
 
 		Rectangle origen(

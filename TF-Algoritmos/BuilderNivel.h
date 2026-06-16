@@ -43,6 +43,11 @@ Mapa^ setupMapa4Nivel1() {
     return mapa;
 }
 
+Mapa^ setupMapaNivel2() {
+    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl2.jpg"));
+
+    return mapa;
+}
 
 Nivel^ setupNivel1() {
     // ------------------- Final ----------------
@@ -55,6 +60,19 @@ Nivel^ setupNivel1() {
     nvl->agregarMapa(setupMapa4Nivel1());
 
     nvl->agregarCinematica(setupCinNvl1Inicio());
+    nvl->agregarCinematica(setupCinNvl1Final());
+
+    return nvl;
+}
+
+Nivel^ setupNivel2() {
+    // ------------------- Final ----------------
+
+    Nivel^ nvl = gcnew Nivel();
+
+    nvl->agregarMapa(setupMapaNivel2());
+
+    nvl->agregarCinematica(setupCinNvl2Inicio());
     nvl->agregarCinematica(setupCinNvl1Final());
 
     return nvl;
