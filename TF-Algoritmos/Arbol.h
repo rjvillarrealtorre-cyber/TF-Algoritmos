@@ -84,7 +84,7 @@ public:
 		if (!vivo) return;
 		if (!germinando) return;
 
-		gr->DrawString("G:" + contadorGerminar, fuente, Brushes::Green, x + ancho / 5, y + alto);
+		gr->DrawString("G:" + contadorGerminar, fuente, Brushes::LightGreen, x + ancho / 5, y + alto);
 
 		gr->DrawString("S:" + contadorSabotear, fuente, Brushes::Red, x + ancho / 5, y - 18);
 	}
