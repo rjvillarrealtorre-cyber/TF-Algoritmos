@@ -46,6 +46,8 @@ Mapa^ setupMapa4Nivel1() {
 Mapa^ setupMapaNivel2() {
     Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl2.jpg"));
 
+    mapa->agregarAliado(gcnew Aliado(50, 50, 10));
+
     return mapa;
 }
 

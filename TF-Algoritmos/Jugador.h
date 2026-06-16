@@ -67,46 +67,6 @@ public:
 		semillas--;
 	}
 
-	void mover() override {
-		determinarIntPorDireccion();
-
-		switch (dirI) {
-		case Derecha:
-			x += velocidad;
-			break;
-		case Izquierda:
-			x -= velocidad;
-			break;
-		case Arriba:
-			y -= velocidad;
-			break;
-		case Abajo:
-			y += velocidad;
-			break;
-		case Suroeste:
-			x -= velocidad;
-			y += velocidad;
-			break;
-		case Sureste:
-			x += velocidad;
-			y += velocidad;
-			break;
-		case Noreste:
-			x += velocidad;
-			y -= velocidad;
-			break;
-		case Noroeste:
-			x -= velocidad;
-			y -= velocidad;
-			break;
-		}
-
-		if (dirI != Quieto) {
-			sprites[direccionActual]->frames++;
-			if (sprites[direccionActual]->frames > 5) sprites[direccionActual]->frames = 0;
-		}
-	}
-
 	void manejarMovimiento() {
 		if (tIzquierda || tAbajo || tDerecha || tArriba) setMov(true);
 		//-------

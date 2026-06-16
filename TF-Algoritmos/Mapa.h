@@ -1,5 +1,5 @@
 #pragma once
-#include "Entidad.h"
+#include "Aliado.h"
 
 using namespace System::Collections::Generic;
 
@@ -8,10 +8,12 @@ private:
 	Bitmap^ fondo;
 
 	List<EntidadEstatica^>^ entEstaticas;
+	List<Aliado^>^ aliados;
 public:
 	Mapa(Bitmap^ f) {
 		fondo = f;
 
+		aliados = gcnew List<Aliado^>();
 		entEstaticas = gcnew List<EntidadEstatica^>();
 	}
 
@@ -19,6 +21,8 @@ public:
 		delete fondo;
 		for (int i = 0; i < entEstaticas->Count; i++) delete entEstaticas[i];
 		delete entEstaticas;
+		for each (Aliado ^ aliado in aliados) delete aliado;
+		delete aliados;
 	}
 
 	void dibujarFondo(Graphics^ gr) {
@@ -29,5 +33,10 @@ public:
 		entEstaticas->Add(ee);
 	}
 
+	void agregarAliado(Aliado^ a) {
+		aliados->Add(a);
+	}
+
 	List<EntidadEstatica^>^ getEntEstaticas() { return entEstaticas; }
+	List<Aliado^>^ getAliados() { return aliados; }
 };

@@ -1,6 +1,9 @@
 #pragma once
 #include "Sprite.h"
 
+using namespace System;
+using namespace System::Drawing;
+
 // Direcciones
 enum Direccion {
 	Derecha, Izquierda, Arriba, Abajo,
@@ -17,7 +20,6 @@ protected:
 
 	array<Sprite^>^ sprites;
 	bool moviendose;
-	int dirI;
 	int direccionActual;
 public:
 	Entidad(int px, int py, int v) {
@@ -25,7 +27,6 @@ public:
 		x = px; y = py;
 		velocidad = v;
 		moviendose = false;
-		dirI = 0;
 		direccionActual = 0;
 	}
 
@@ -34,15 +35,45 @@ public:
 		delete sprites;
 	}
 
-	void determinarIntPorDireccion() {
-		direccionActual = dirI;
+	virtual void mover() {
+		switch (direccionActual) {
+		case Derecha:
+			x += velocidad;
+			break;
+		case Izquierda:
+			x -= velocidad;
+			break;
+		case Arriba:
+			y -= velocidad;
+			break;
+		case Abajo:
+			y += velocidad;
+			break;
+		case Suroeste:
+			x -= velocidad;
+			y += velocidad;
+			break;
+		case Sureste:
+			x += velocidad;
+			y += velocidad;
+			break;
+		case Noreste:
+			x += velocidad;
+			y -= velocidad;
+			break;
+		case Noroeste:
+			x -= velocidad;
+			y -= velocidad;
+			break;
+		}
+
+		if (direccionActual != Quieto) {
+			sprites[direccionActual]->frames++;
+			if (sprites[direccionActual]->frames > 5) sprites[direccionActual]->frames = 0;
+		}
 	}
 
-	virtual void mover() = 0;
-
 	virtual void mostrar(Graphics^ gr) {
-		determinarIntPorDireccion();
-
 		Rectangle origen(
 			sprites[direccionActual]->frames * sprites[direccionActual]->ancho,
 			0,
@@ -75,13 +106,15 @@ public:
 
 	//Setters y getters
 
-	void setDir(char d) { dirI = d; }
+	void setDir(char d) { direccionActual = d; }
 	void setMov(bool d) { moviendose = d; }
 	void setX(int px) { x = px; }
 	void setY(int p) { y = p; }
 
 	bool getMov() { return moviendose; }
-	char getDir() { return dirI; }
+	char getDir() { return direccionActual; }
 	int getX() { return x; }
 	int getY() { return y; }
+
+	array<Sprite^>^ getSprites() { return sprites; }
 };

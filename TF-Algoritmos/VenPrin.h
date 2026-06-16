@@ -110,6 +110,9 @@ namespace TFAlgoritmos {
 		case Keys::E:
 			juego->setTeclaE(true);
 			break;
+		case Keys::Q:
+			juego->setTeclaQ(true);
+			break;
 		case Keys::D1:
 			juego->setTeclaOpciones(true, 1);
 			break;
@@ -144,6 +147,9 @@ namespace TFAlgoritmos {
 			break;
 		case Keys::E:
 			juego->setTeclaE(false);
+			break;
+		case Keys::Q:
+			juego->setTeclaQ(false);
 			break;
 		case Keys::D1:
 			juego->setTeclaOpciones(false, 1);

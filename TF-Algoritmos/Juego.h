@@ -26,6 +26,7 @@ private:
 	int TIEMPO_SLEEP;
 
 	bool teclaE;
+	bool teclaQ;
 	List<bool>^ teclasOpciones;
 	List<bool>^ teclasOpcionesAnterior;
 public:
@@ -120,6 +121,13 @@ public:
 			arbol->mostrar(gr);
 		}
 
+		//Aliados (nivel 2)
+		for each (Aliado ^ aliado in niveles[nivelActual]->getMapas()[niveles[nivelActual]
+			->getMapaActual()]->getAliados()) {
+			aliado->manejarEstados(teclaQ);
+			aliado->manejarMovimiento(gr, jugador);
+		}
+
 		//Jugador
 		jugador->plantarArbol(teclaE);
 		jugador->manejarMovimiento();
@@ -153,6 +161,8 @@ public:
 
 	void setTeclaE(bool e) { teclaE = e; }
 	bool getTeclaE() { return teclaE; }
+	void setTeclaQ(bool e) { teclaQ = e; }
+	bool getTeclaQ() { return teclaQ; }
 
 	void setTeclaOpciones(bool e, int i) { 
 		if (i < 1) return;
