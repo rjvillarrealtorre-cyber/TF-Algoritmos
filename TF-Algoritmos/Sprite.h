@@ -19,7 +19,7 @@ ref struct Sprite {
 		spr = sp;
 		frames = 0;
 
-		ancho = spr->Width / 6 + 1;
+		ancho = spr->Width / 6;
 		alto = spr->Height;
 	}
 

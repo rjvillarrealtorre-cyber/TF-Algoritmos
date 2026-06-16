@@ -58,7 +58,10 @@ public:
 	void manejarEstados(bool teclaQ) {
 		if (!teclaQ) return;
 
-		if (estado == "seguir") estado = "parar";
+		if (estado == "seguir") {
+			estado = "parar";
+			direccionActual = Quieto;
+		}
 		else if (estado == "parar") estado = "seguir";
 	}
 
