@@ -1,15 +1,14 @@
 #pragma once
 #include "Jugador.h"
+#include "EntidadDinamica.h"
 
-ref class Aliado : public Entidad {
+ref class Aliado : public EntidadDinamica {
 private:
 	String^ estado;
-	bool movDerecha, movIzquierda, movArriba, movAbajo;
 public:
 	Aliado(int px, int py, int v)
-		: Entidad(px, py, v) {
+		: EntidadDinamica(px, py, v) {
 		estado = "seguir";
-		movDerecha = movIzquierda = movAbajo = movArriba = false;
 
 		sprites = gcnew array<Sprite^>(9);
 		sprites[Quieto] = gcnew Sprite(gcnew Bitmap("sprites\\entidades\\wilmer_idle.png"), true);
@@ -21,22 +20,6 @@ public:
 		sprites[Sureste] = gcnew Sprite(gcnew Bitmap("sprites\\entidades\\wilmer_walkingsheet_southeast.png"));
 		sprites[Noreste] = gcnew Sprite(gcnew Bitmap("sprites\\entidades\\wilmer_walkingsheet_northeast.png"));
 		sprites[Noroeste] = gcnew Sprite(gcnew Bitmap("sprites\\entidades\\wilmer_walkingsheet_northwest.png"));
-	}
-
-	void determinarDireccion() {
-		if (movDerecha && !movAbajo && !movArriba) direccionActual = Derecha;
-		else if (movIzquierda && !movAbajo && !movArriba) direccionActual = Izquierda;
-		else if (movArriba && !movDerecha && !movIzquierda) direccionActual = Arriba;
-		else if (movAbajo && !movDerecha && !movIzquierda) direccionActual = Abajo;
-		else if (movDerecha && movAbajo) direccionActual = Sureste;
-		else if (movDerecha && movArriba) direccionActual = Noreste;
-		else if (movIzquierda && movAbajo) direccionActual = Suroeste;
-		else if (movIzquierda && movArriba) direccionActual = Noroeste;
-		else if (!movDerecha && !movIzquierda && !movAbajo && !movArriba) direccionActual = Quieto;
-	}
-
-	void reiniciarEstado() {
-		movDerecha = movIzquierda = movAbajo = movArriba = false;
 	}
 
 	void seguirJugador(Jugador^ jugador) {

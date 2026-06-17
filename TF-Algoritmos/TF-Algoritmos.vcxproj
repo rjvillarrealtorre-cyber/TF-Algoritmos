@@ -132,6 +132,7 @@
     <ClInclude Include="BuilderNivel.h" />
     <ClInclude Include="Cinematica.h" />
     <ClInclude Include="Entidad.h" />
+    <ClInclude Include="EntidadDinamica.h" />
     <ClInclude Include="EntidadEstatica.h" />
     <ClInclude Include="Fuente.h" />
     <ClInclude Include="Hud.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="MenuC.h" />
     <ClInclude Include="Nivel.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Talador.h" />
     <ClInclude Include="Utilidades.h" />
     <ClInclude Include="VenCreditos.h">
       <FileType>CppForm</FileType>

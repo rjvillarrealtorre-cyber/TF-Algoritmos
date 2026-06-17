@@ -1,5 +1,6 @@
 #pragma once
 #include "Aliado.h"
+#include "Talador.h"
 
 using namespace System::Collections::Generic;
 
@@ -9,12 +10,14 @@ private:
 
 	List<EntidadEstatica^>^ entEstaticas;
 	List<Aliado^>^ aliados;
+	List<Talador^>^ taladores;
 public:
 	Mapa(Bitmap^ f) {
 		fondo = f;
 
 		aliados = gcnew List<Aliado^>();
 		entEstaticas = gcnew List<EntidadEstatica^>();
+		taladores = gcnew List<Talador^>();
 	}
 
 	~Mapa() {
@@ -23,6 +26,8 @@ public:
 		delete entEstaticas;
 		for each (Aliado ^ aliado in aliados) delete aliado;
 		delete aliados;
+		for each (Talador ^ tala in taladores) delete tala;
+		delete taladores;
 	}
 
 	void dibujarFondo(Graphics^ gr) {
@@ -37,6 +42,11 @@ public:
 		aliados->Add(a);
 	}
 
+	void agregarTalador(Talador^ t) {
+		taladores->Add(t);
+	}
+
 	List<EntidadEstatica^>^ getEntEstaticas() { return entEstaticas; }
 	List<Aliado^>^ getAliados() { return aliados; }
+	List<Talador^>^ getTaladores() { return taladores; }
 };

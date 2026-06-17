@@ -1,5 +1,6 @@
 #pragma once
 #include "Sprite.h"
+#include "Utilidades.h"
 
 using namespace System;
 using namespace System::Drawing;
@@ -21,13 +22,18 @@ protected:
 	array<Sprite^>^ sprites;
 	bool moviendose;
 	int direccionActual;
+
+	bool invulnerable;
+	int contadorInvulnerabilidad;
+	int tiempoInvulnerabilidad;
 public:
 	Entidad(int px, int py, int v) {
 		escala = 1.6;
 		x = px; y = py;
 		velocidad = v;
 		moviendose = false;
-		direccionActual = 0;
+		direccionActual = Quieto;
+		invulnerable = false;
 	}
 
 	~Entidad() {
@@ -104,12 +110,29 @@ public:
 		}
 	}
 
+	Rectangle getRectangle() {
+		return Rectangle(x, y, sprites[direccionActual]->ancho, sprites[direccionActual]->alto);
+	}
+
+	void manejarContador() {
+		if (!invulnerable) return;
+
+		contadorInvulnerabilidad++;
+
+		if (contadorInvulnerabilidad >= tiempoInvulnerabilidad * CONVERSOR_CONT) {
+			contadorInvulnerabilidad = 0;
+			invulnerable = false;
+		}
+	}
+
 	//Setters y getters
 
 	void setDir(char d) { direccionActual = d; }
 	void setMov(bool d) { moviendose = d; }
 	void setX(int px) { x = px; }
 	void setY(int p) { y = p; }
+	void setInvulnerable(bool p) { invulnerable = p; }
+	void setContadorInvulnerabilidad(int i) { contadorInvulnerabilidad = i; }
 
 	bool getMov() { return moviendose; }
 	char getDir() { return direccionActual; }

@@ -128,6 +128,13 @@ public:
 			aliado->manejarMovimiento(gr, jugador);
 		}
 
+		//Taladores (nivel 2)
+		for each (Talador^ talador in niveles[nivelActual]->getMapas()[niveles[nivelActual]
+			->getMapaActual()]->getTaladores()) {
+			talador->manejarTalador(gr, jugador, niveles[nivelActual]->getMapas()[niveles[nivelActual]
+				->getMapaActual()]->getAliados()[0]);
+		}
+
 		//Jugador
 		jugador->plantarArbol(teclaE);
 		jugador->manejarMovimiento();
@@ -149,6 +156,10 @@ public:
 		for (int i = 0; i < 4; i++) teclasOpcionesAnterior[i] = teclasOpciones[i];
 		jugador->setTDerechaAnterior(jugador->getTDerecha());
 		jugador->setTIzquierdaAnterior(jugador->getTIzquierda());
+
+		//Contadores
+		jugador->manejarContador();
+
 		contador++;
 	}
 

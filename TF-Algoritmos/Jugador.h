@@ -40,6 +40,7 @@ public:
 		tDerechaAnterior = tIzquierdaAnterior = false;
 		semillas = 5;
 		enBote = false;
+		tiempoInvulnerabilidad = 2;
 		arboles = gcnew List<Arbol^>();
 	}
 
@@ -108,8 +109,10 @@ public:
 	int getConocimiento() { return conLengua; }
 	int getEvidencia() { return evidencia; }
 	int getVida() { return vida; }
+	bool getInvulnerable() { return invulnerable; }
 	bool getTeclaEscape() { return tEscape; }
 	int getSemillas() { return semillas; }
 	bool getEnBote() { return enBote; }
+	int getContadorInvulnerabilidad() { return contadorInvulnerabilidad; }
 	List<Arbol^>^ getArboles() { return arboles; }
 };
