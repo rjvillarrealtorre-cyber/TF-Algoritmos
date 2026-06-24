@@ -14,7 +14,8 @@ private:
 	int confianza, conLengua, evidencia;
 	//Nivel 2
 	int semillas;
-	List<Arbol^>^ arboles;
+	array<Arbol^>^ arboles;
+	int totalArbolesGerminados;
 	//Nivel 3
 	bool enBote;
 public:
@@ -36,36 +37,72 @@ public:
 		confianza = 100;
 		conLengua = 0;
 		evidencia = 0;
+		totalArbolesGerminados = 0;
 		tEscape = false;
 		tDerechaAnterior = tIzquierdaAnterior = false;
-		semillas = 5;
+		semillas = 6; // TEMPORAL
 		enBote = false;
 		tiempoInvulnerabilidad = 2;
-		arboles = gcnew List<Arbol^>();
+		arboles = gcnew array<Arbol^>(0);
 	}
 
 	~Jugador() {
-		for each (Arbol ^ ar in arboles) delete ar;
+        for (int i = 0; i < arboles->Length; i++) delete arboles[i];
 		delete arboles;
 	}
 
-	void plantarArbol(bool teclaE) {
-		if (!teclaE || semillas <= 0) return;
+	void plantarArbol(bool teclaE, bool teclaEAnt) {
+		if ((!teclaE || teclaEAnt) || semillas <= 0) return;
 
 		if (direccionActual == Derecha || direccionActual == Sureste || direccionActual == Noreste) { // falta restriccion por parcelas
-			arboles->Add(gcnew Arbol(x + sprites[0]->ancho + 5, y + sprites[0]->alto / 2));
+            {
+				int oldLen = arboles->Length;
+				array<Arbol^>^ tmp = gcnew array<Arbol^>(oldLen + 1);
+				for (int i = 0; i < oldLen; i++) tmp[i] = arboles[i];
+				tmp[oldLen] = gcnew Arbol(x + sprites[0]->ancho + 5, y + sprites[0]->alto / 2);
+				arboles = tmp;
+			}
 		}
 		else if (direccionActual == Izquierda || direccionActual == Suroeste || direccionActual == Noroeste) {
-			arboles->Add(gcnew Arbol(x - 5, y + sprites[0]->alto / 2));
+            {
+				int oldLen = arboles->Length;
+				array<Arbol^>^ tmp = gcnew array<Arbol^>(oldLen + 1);
+				for (int i = 0; i < oldLen; i++) tmp[i] = arboles[i];
+				tmp[oldLen] = gcnew Arbol(x - 5, y + sprites[0]->alto / 2);
+				arboles = tmp;
+			}
 		}
 		else if (direccionActual == Arriba) {
-			arboles->Add(gcnew Arbol(x + sprites[0]->ancho / 2, y - 5));
+            {
+				int oldLen = arboles->Length;
+				array<Arbol^>^ tmp = gcnew array<Arbol^>(oldLen + 1);
+				for (int i = 0; i < oldLen; i++) tmp[i] = arboles[i];
+				tmp[oldLen] = gcnew Arbol(x + sprites[0]->ancho / 2, y - 5);
+				arboles = tmp;
+			}
 		}
 		else {
-			arboles->Add(gcnew Arbol(x + sprites[0]->ancho / 2, y + sprites[0]->alto + 5));
+            {
+				int oldLen = arboles->Length;
+				array<Arbol^>^ tmp = gcnew array<Arbol^>(oldLen + 1);
+				for (int i = 0; i < oldLen; i++) tmp[i] = arboles[i];
+				tmp[oldLen] = gcnew Arbol(x + sprites[0]->ancho / 2, y + sprites[0]->alto + 5);
+				arboles = tmp;
+			}
 		}
 
 		semillas--;
+	}
+
+	bool verPorArboles() {
+		for each (Arbol ^ arbol in arboles) {
+			if (arbol->getEstaGerminando() || !arbol->getEstaVivo() || arbol->getMarcadorCrecer()) continue;
+			totalArbolesGerminados++;
+			arbol->setMarcadorCrecer(true);
+		}
+
+		if (totalArbolesGerminados >= 4) return true;
+		return false;
 	}
 
 	void manejarMovimiento() {
@@ -114,5 +151,5 @@ public:
 	int getSemillas() { return semillas; }
 	bool getEnBote() { return enBote; }
 	int getContadorInvulnerabilidad() { return contadorInvulnerabilidad; }
-	List<Arbol^>^ getArboles() { return arboles; }
+	array<Arbol^>^ getArboles() { return arboles; }
 };

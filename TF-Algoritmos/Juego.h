@@ -16,44 +16,43 @@ ref class Juego {
 private:
 	Jugador^ jugador;
 	Hud^ hud;
-	List<Nivel^>^ niveles;
+	array<Nivel^>^ niveles;
 	int nivelActual;
 	bool puedeAcabarNivel;
+	bool enDerrota;
 	bool cinFinalIniciada;
 
 	Fuente^ fuente;
 	int contador;
 	int TIEMPO_SLEEP;
 
-	bool teclaE;
-	bool teclaQ;
-	List<bool>^ teclasOpciones;
-	List<bool>^ teclasOpcionesAnterior;
+	bool teclaE, teclaQ;
+	bool teclaEAnt, teclaQAnt;
+	array<bool>^ teclasOpciones;
+	array<bool>^ teclasOpcionesAnterior;
 public:
 	Juego() {
 		jugador = gcnew Jugador(300, 250, 14);
-		niveles = gcnew List<Nivel^>();
+		niveles = gcnew array<Nivel^>(0);
 		fuente = gcnew Fuente();
 		contador = 0;
 		TIEMPO_SLEEP = 75;
 		teclaE = false;
+		enDerrota = false;
 		puedeAcabarNivel = false;
 		cinFinalIniciada = false;
-		teclasOpciones = gcnew List<bool>(
-			gcnew array<bool> {false, false, false, false});
-		teclasOpcionesAnterior = gcnew List<bool>(
-			gcnew array<bool> {false, false, false, false});
-
-		//Setup FINAL
+		teclasOpciones = gcnew array<bool>(4) { false, false, false, false };
+		teclasOpcionesAnterior = gcnew array<bool>(4) { false, false, false, false };
+       //Setup FINAL
 		//niveles->Add(setupNivel1());
-		niveles->Add(setupNivel2());
+		agregarNivel(setupNivel2());
 
 		hud = gcnew Hud();
 	}
 
 	~Juego() {
 		delete jugador;
-		for (int i = 0; i < niveles->Count; i++) delete niveles[i];
+		for (int i = 0; i < niveles->Length; i++) delete niveles[i];
 		delete niveles;
 		delete hud;
 		delete fuente;
@@ -62,10 +61,10 @@ public:
 
 	void acabarNivel() {
 		if (!puedeAcabarNivel) return;
-		// if (nivelActual + 1 >= niveles->Count) return;
+		// if (nivelActual + 1 >= niveles->Length) return;
 
 		if (!cinFinalIniciada &&
-			niveles[nivelActual]->getCinematicas()->Count == 2)
+			niveles[nivelActual]->getCinematicas()->Length == 2)
 		{
 			niveles[nivelActual]->getCinematicas()[1]->setEnCinematica(true);
 			cinFinalIniciada = true;
@@ -93,7 +92,38 @@ public:
 		if (niveles[numeroActual]->getCinematicas()[numeroActual]->getEnCinematica()) return;
 	}
 
+	void mostrarVentanaDerrota(Graphics^ gr) {
+		if (!enDerrota) return;
+
+		Bitmap^ md = gcnew Bitmap("sprites\\menu\\derrota.jpg");
+		gr->DrawImage(md, 88, 0, 1024, 514);
+
+		if (jugador->getTeclaEscape()) {
+			niveles[nivelActual]->~Nivel();
+
+			switch (nivelActual) {
+			case 0:
+				niveles[nivelActual] = setupNivel1();
+				break;
+			case 1:
+				niveles[nivelActual] = setupNivel2();
+				break;
+			case 2:
+				// FALTA
+				// niveles[nivelActual] = setupNivel3();
+				break;
+			}
+
+			enDerrota = false;
+		}
+
+		delete md;
+	}
+
 	void manejarBuclePrincipal(Graphics^ gr) {
+		//Derrota
+		mostrarVentanaDerrota(gr);
+		if (enDerrota) return;
 		//Cinematica
 		acabarNivel();
 		int numCinActual = puedeAcabarNivel ? 1 : 0;
@@ -124,7 +154,7 @@ public:
 		//Aliados (nivel 2)
 		for each (Aliado ^ aliado in niveles[nivelActual]->getMapas()[niveles[nivelActual]
 			->getMapaActual()]->getAliados()) {
-			aliado->manejarEstados(teclaQ);
+			aliado->manejarEstados(teclaQ, teclaQAnt);
 			aliado->manejarMovimiento(gr, jugador);
 		}
 
@@ -136,7 +166,7 @@ public:
 		}
 
 		//Jugador
-		jugador->plantarArbol(teclaE);
+		jugador->plantarArbol(teclaE, teclaEAnt);
 		jugador->manejarMovimiento();
 		jugador->mover();
 
@@ -152,10 +182,20 @@ public:
 			nivelActual, contador, TIEMPO_SLEEP
 		);
 
+		//Evento (nivel 2)
+		if (true) {
+			niveles[nivelActual]->getMapas()[niveles[nivelActual]
+				->getMapaActual()]->manejarEventos();
+			bool terminara = jugador->verPorArboles();
+
+			if (terminara) puedeAcabarNivel = true;
+		}
+			
+
 		//Otros
 		for (int i = 0; i < 4; i++) teclasOpcionesAnterior[i] = teclasOpciones[i];
-		jugador->setTDerechaAnterior(jugador->getTDerecha());
-		jugador->setTIzquierdaAnterior(jugador->getTIzquierda());
+		teclaEAnt = teclaE;
+		teclaQAnt = teclaQ;
 
 		//Contadores
 		jugador->manejarContador();
@@ -163,8 +203,12 @@ public:
 		contador++;
 	}
 
-	void agregarNivel(Nivel^ nvl) {
-		niveles->Add(nvl);
+ void agregarNivel(Nivel^ nvl) {
+		int oldLen = niveles->Length;
+		array<Nivel^>^ tmp = gcnew array<Nivel^>(oldLen + 1);
+		for (int i = 0; i < oldLen; i++) tmp[i] = niveles[i];
+		tmp[oldLen] = nvl;
+		niveles = tmp;
 	}
 
 	//Setters y getters
@@ -183,6 +227,6 @@ public:
 		if (i < 1) return;
 		teclasOpciones[i - 1] = e;
 	}
-	List<bool>^ getTeclasOpciones() { return teclasOpciones; }
-	List<bool>^ getTeclasOpcionesAnterior() { return teclasOpcionesAnterior; }
+	array<bool>^ getTeclasOpciones() { return teclasOpciones; }
+	array<bool>^ getTeclasOpcionesAnterior() { return teclasOpcionesAnterior; }
 };

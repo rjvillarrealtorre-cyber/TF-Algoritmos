@@ -46,7 +46,8 @@ Mapa^ setupMapa4Nivel1() {
 Mapa^ setupMapaNivel2() {
     Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl2.jpg"));
 
-    mapa->agregarAliado(gcnew Aliado(50, 50, 10));
+    // Coords del jugador: 800, 205
+    mapa->agregarAliado(gcnew Aliado(740, 230, 10));
     mapa->agregarTalador(gcnew Talador(230, 130, 9));
     mapa->agregarTalador(gcnew Talador(190, 215, 9));
 
@@ -77,7 +78,7 @@ Nivel^ setupNivel2() {
     nvl->agregarMapa(setupMapaNivel2());
 
     nvl->agregarCinematica(setupCinNvl2Inicio());
-    nvl->agregarCinematica(setupCinNvl1Final());
+    nvl->agregarCinematica(setupCinNvl2Final());
 
     return nvl;
 }

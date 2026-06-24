@@ -9,14 +9,14 @@ ref class Dialogo;
 // Opciones
 ref struct Opcion {
 	String^ texto;
-	List<int>^ efectos; // {confianza, lengua, evidencia}
+	array<int>^ efectos; // {confianza, lengua, evidencia}
 	int siguienteDialogo;
 	int confianzaReq = 0;
 	int lenguaReq = 0;
 	bool acabaNivel;
 
 	// Con todos los requerimentos
-	Opcion(String^ t, List<int>^ ef, int sd, int cr, int lr, bool an) {
+	Opcion(String^ t, array<int>^ ef, int sd, int cr, int lr, bool an) {
 		texto = t;
 		efectos = ef;
 		siguienteDialogo = sd;
@@ -26,7 +26,7 @@ ref struct Opcion {
 	}
 
 	//Requiere confianza
-	Opcion(String^ t, List<int>^ ef, int sd, int cr) {
+	Opcion(String^ t, array<int>^ ef, int sd, int cr) {
 		texto = t;
 		efectos = ef;
 		siguienteDialogo = sd;
@@ -36,7 +36,7 @@ ref struct Opcion {
 	}
 
 	//Estandar
-	Opcion(String^ t, List<int>^ ef, int sd) {
+	Opcion(String^ t, array<int>^ ef, int sd) {
 		texto = t;
 		efectos = ef;
 		siguienteDialogo = sd;
@@ -53,11 +53,11 @@ ref struct Opcion {
 
 ref class Dialogo {
 private:
-	List<String^>^ lineas;
+    array<String^>^ lineas;
 
 	bool poderElegir;
 	int eleccion;
-	List<Opcion^>^ opciones;
+    array<Opcion^>^ opciones;
 
 	int sigDialogo;
 	bool estaEnEspanol;
@@ -67,9 +67,9 @@ private:
 
 	// Generado con IA (Github Copilot)
 	// Métodos de inicialización para evitar argumentos por defecto
-	void initNoElegir(List<String^>^ l, int sd, bool eee) {
+    void initNoElegir(array<String^>^ l, int sd, bool eee) {
 		lineas = l;
-		opciones = gcnew List<Opcion^>();
+		opciones = gcnew array<Opcion^>(0);
 		poderElegir = false;
 		eleccion = -1;
 		sigDialogo = sd;
@@ -79,7 +79,7 @@ private:
 		randNum = rand->Next(1, 101);
 	}
 
-	void initConOpciones(List<String^>^ l, List<Opcion^>^ opc, bool eee) {
+    void initConOpciones(array<String^>^ l, array<Opcion^>^ opc, bool eee) {
 		lineas = l;
 		poderElegir = true;
 		opciones = opc;
@@ -94,17 +94,17 @@ private:
 public:
 	// Sobrecarga de constructores para evitar el molesto error
 	// "no se permite argumentos predeterminados"
-	Dialogo(List<String^>^ l, int sd, bool eee) {
+	Dialogo(array<String^>^ l, int sd, bool eee) {
 		initNoElegir(l, sd, eee);
 	}
-	Dialogo(List<String^>^ l) { // equivalente a sd = -1, eee = true
+	Dialogo(array<String^>^ l) { // equivalente a sd = -1, eee = true
 		initNoElegir(l, -1, true);
 	}
 
-	Dialogo(List<String^>^ l, List<Opcion^>^ opc, bool eee) {
+	Dialogo(array<String^>^ l, array<Opcion^>^ opc, bool eee) {
 		initConOpciones(l, opc, eee);
 	}
-	Dialogo(List<String^>^ l, List<Opcion^>^ opc) { // equivalente a eee = true
+	Dialogo(array<String^>^ l, array<Opcion^>^ opc) { // equivalente a eee = true
 		initConOpciones(l, opc, true);
 	}
 
@@ -117,15 +117,17 @@ public:
 		delete opciones;
 	}
 
-	void agregarLinea(String^ l) {
-		lineas->Add(l);
+    void agregarLinea(String^ l) {
+		int old = (lineas == nullptr) ? 0 : lineas->Length;
+		Array::Resize<String^>(lineas, old + 1);
+		lineas[old] = l;
 	}
 
 	void mostrarLineas(Graphics^ gr, Font^ fuente, Point^ cuadro, int numConLengua) { //Imprime el diálogo en la pantalla
 		short centrarX = (900 - lineas[0]->Length * 10) / 2;
-		short centrarY = (155 - (lineas->Count + opciones->Count) * 19) / 2;
+        short centrarY = (155 - (lineas->Length + opciones->Length) * 19) / 2;
 
-		for (int i = 0; i < lineas->Count; i++) {
+		for (int i = 0; i < lineas->Length; i++) {
 			if (!estaEnEspanol && (lineas[i]->ToCharArray()[0] != '[' && lineas[i]->ToCharArray()[0] != '|')) {
 				for (int j = 0; j < lineas[i]->Length; j++) {
 					if (lineas[i]->ToCharArray()[j] == ' ' || lineas[i]->ToCharArray()[j] == ',' ||
@@ -150,14 +152,14 @@ public:
 			}
 		}
 
-		for (int i = 0; i < opciones->Count; i++) {
+        for (int i = 0; i < opciones->Length; i++) {
 			String^ texto = (i + 1) + ": " + opciones[i]->texto;
 			gr->DrawString(texto, fuente, Brushes::Black, cuadro->X + centrarX, alturaDialogo + 18 * (i + 1) );
 		}
 	}
 
 	//elegir: Maneja la lógica de la elección
-	void elegir(Jugador^ jugador, List<bool>^ teclasOpciones, List<bool>^ teclasOpcionesAnterior) {
+	void elegir(Jugador^ jugador, array<bool>^ teclasOpciones, array<bool>^ teclasOpcionesAnterior) {
 		// Ve si el jugador ha presionado ciertos botones
 		if (teclasOpciones[0] && !teclasOpcionesAnterior[0]) eleccion = 1;
 		else if (teclasOpciones[1] && !teclasOpcionesAnterior[1]) eleccion = 2;
@@ -168,7 +170,7 @@ public:
 
 		//Comprobación...
 		//Si la elección es mayor que las opciones disponibles: elección inválida
-		if (eleccion > opciones->Count) {
+		if (eleccion > opciones->Length) {
 			eleccion = -1;
 			return;
 		}
@@ -210,18 +212,18 @@ public:
 // Lo realmente importante
 ref class ArbolDialogo {
 private:
-	List<Dialogo^>^ arbol; // -> Conjunto de interacciones
-	// Una interacción sería: List<Dialogo> interaccion;
+	array<Dialogo^>^ arbol; // -> Conjunto de interacciones
+	// Una interacción sería: array<Dialogo> interaccion;
 	int numDialogo;
 public:
-	ArbolDialogo(List<Dialogo^>^ a) {
+	ArbolDialogo(array<Dialogo^>^ a) {
 		numDialogo = 0;
 		arbol = a;
 	}
 
-	ArbolDialogo() {
+    ArbolDialogo() {
 		numDialogo = 0;
-		arbol = gcnew List<Dialogo^>();
+		arbol = gcnew array<Dialogo^>(0);
 	}
 
 	~ArbolDialogo() {
@@ -229,21 +231,23 @@ public:
 		delete arbol;
 	}
 
-	// Para el setup...
+    // Para el setup...
 	void agregarDialogo(Dialogo^ d) {
-		arbol->Add(d);
+		int old = (arbol == nullptr) ? 0 : arbol->Length;
+		Array::Resize<Dialogo^>(arbol, old + 1);
+		arbol[old] = d;
 	}
 
 	// Imprime la interacción en la panatalla
 	void mostrarDialogo(Graphics^ gr, Font^ fuente, Point^ cuadro, int numConLengua) {
-		if (numDialogo >= arbol->Count || numDialogo < 0) return;
+		if (numDialogo >= arbol->Length || numDialogo < 0) return;
 
 		arbol[numDialogo]->mostrarLineas(gr, fuente, cuadro, numConLengua);
 	}
 
 	// Función más importante. Se encarga del funcionamiento
 	// de cada interacción.
-	bool manejarFlujoInteraccion(Graphics^ gr, Font^ fuente, Point^ cuadro, bool teclaE, List<bool>^ teclasOpciones, List<bool>^ teclasOpcionesAnterior, Jugador^ jugador) {
+	bool manejarFlujoInteraccion(Graphics^ gr, Font^ fuente, Point^ cuadro, bool teclaE, array<bool>^ teclasOpciones, array<bool>^ teclasOpcionesAnterior, Jugador^ jugador) {
 		Dialogo^ d = arbol[numDialogo];
 
 		mostrarDialogo(gr, fuente, cuadro, jugador->getConocimiento());
@@ -255,7 +259,7 @@ public:
 			else
 				numDialogo++;
 
-			if (numDialogo >= arbol->Count)
+			if (numDialogo >= arbol->Length)
 				numDialogo = 0;
 		}
 		// Caso con opciones
@@ -273,10 +277,10 @@ public:
 			// cambiar al siguiente nodo según opción
 			numDialogo = op->siguienteDialogo;
 
-			if (numDialogo >= arbol->Count) numDialogo = 0;
+			if (numDialogo >= arbol->Length) numDialogo = 0;
 		}
 		return false;
 	}
 
-	List<Dialogo^>^ getArbol() { return arbol; }
+	array<Dialogo^>^ getArbol() { return arbol; }
 };

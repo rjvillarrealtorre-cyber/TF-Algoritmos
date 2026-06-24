@@ -8,21 +8,23 @@ ref class Mapa {
 private:
 	Bitmap^ fondo;
 
-	List<EntidadEstatica^>^ entEstaticas;
-	List<Aliado^>^ aliados;
-	List<Talador^>^ taladores;
+	array<EntidadEstatica^>^ entEstaticas;
+	array<Aliado^>^ aliados;
+	array<Talador^>^ taladores;
+
+	int contador;
 public:
 	Mapa(Bitmap^ f) {
 		fondo = f;
 
-		aliados = gcnew List<Aliado^>();
-		entEstaticas = gcnew List<EntidadEstatica^>();
-		taladores = gcnew List<Talador^>();
+		aliados = gcnew array<Aliado^>(0);
+		entEstaticas = gcnew array<EntidadEstatica^>(0);
+		taladores = gcnew array<Talador^>(0);
 	}
 
 	~Mapa() {
 		delete fondo;
-		for (int i = 0; i < entEstaticas->Count; i++) delete entEstaticas[i];
+		for (int i = 0; i < entEstaticas->Length; i++) delete entEstaticas[i];
 		delete entEstaticas;
 		for each (Aliado ^ aliado in aliados) delete aliado;
 		delete aliados;
@@ -34,19 +36,45 @@ public:
 		gr->DrawImage(fondo, 0, 0, 900, 514);
 	}
 
-	void agregarEntidadEstatica(EntidadEstatica^ ee) {
-		entEstaticas->Add(ee);
+	void manejarEventos() {
+		//Por ahora, el único evento es el tercer talador
+		// del nivel 2
+		contador++;
+
+        if (contador == 30 * CONVERSOR_CONT) {
+			int oldLen = taladores->Length;
+			array<Talador^>^ tmp = gcnew array<Talador^>(oldLen + 1);
+			for (int i = 0; i < oldLen; i++) tmp[i] = taladores[i];
+			tmp[oldLen] = gcnew Talador(840, 236, 9);
+			taladores = tmp;
+		}
 	}
 
-	void agregarAliado(Aliado^ a) {
-		aliados->Add(a);
+    void agregarEntidadEstatica(EntidadEstatica^ ee) {
+		int oldLen = entEstaticas->Length;
+		array<EntidadEstatica^>^ tmp = gcnew array<EntidadEstatica^>(oldLen + 1);
+		for (int i = 0; i < oldLen; i++) tmp[i] = entEstaticas[i];
+		tmp[oldLen] = ee;
+		entEstaticas = tmp;
 	}
 
-	void agregarTalador(Talador^ t) {
-		taladores->Add(t);
+    void agregarAliado(Aliado^ a) {
+		int oldLen = aliados->Length;
+		array<Aliado^>^ tmp = gcnew array<Aliado^>(oldLen + 1);
+		for (int i = 0; i < oldLen; i++) tmp[i] = aliados[i];
+		tmp[oldLen] = a;
+		aliados = tmp;
 	}
 
-	List<EntidadEstatica^>^ getEntEstaticas() { return entEstaticas; }
-	List<Aliado^>^ getAliados() { return aliados; }
-	List<Talador^>^ getTaladores() { return taladores; }
+    void agregarTalador(Talador^ t) {
+		int oldLen = taladores->Length;
+		array<Talador^>^ tmp = gcnew array<Talador^>(oldLen + 1);
+		for (int i = 0; i < oldLen; i++) tmp[i] = taladores[i];
+		tmp[oldLen] = t;
+		taladores = tmp;
+	}
+
+	array<EntidadEstatica^>^ getEntEstaticas() { return entEstaticas; }
+	array<Aliado^>^ getAliados() { return aliados; }
+	array<Talador^>^ getTaladores() { return taladores; }
 };

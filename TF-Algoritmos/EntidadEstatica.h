@@ -52,7 +52,7 @@ public:
 		return false;
 	}
 
-	bool manejarDialogo(Graphics^ gr, Jugador^ jugador, Font^ fuente, bool teclaE, List<bool>^ teclaOpciones, List<bool>^ teclaOpcionesAnterior) {
+	bool manejarDialogo(Graphics^ gr, Jugador^ jugador, Font^ fuente, bool teclaE, array<bool>^ teclaOpciones, array<bool>^ teclaOpcionesAnterior) {
 		if (determinarCercania(jugador) && teclaE)
 			mostrandoCuadroDialogo = true;
 
@@ -69,7 +69,7 @@ public:
 		return aa;
 	}
 
-	bool manejar(Graphics^ gr, Jugador^ jugador, Font^ fuente, bool teclaE, List<bool>^ teclaOpciones, List<bool>^ teclaOpcionesAnterior) {
+	bool manejar(Graphics^ gr, Jugador^ jugador, Font^ fuente, bool teclaE, array<bool>^ teclaOpciones, array<bool>^ teclaOpcionesAnterior) {
 		mostrarInteractuar(gr);
 		bool aa = manejarDialogo(gr, jugador, fuente, teclaE, teclaOpciones, teclaOpcionesAnterior);
 		mostrar(gr);

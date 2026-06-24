@@ -37,17 +37,17 @@ public:
 
     virtual ~Talador() {}
 
-    void determinarObjetivo(List<Arbol^>^ arboles) {
-        if (arboles->Count == 0 || enHuida) return;
+    void determinarObjetivo(array<Arbol^>^ arboles) {
+        if (arboles->Length == 0 || enHuida) return;
 
         if ((arbolObjetivo != -1 && (!arboles[arbolObjetivo]->getEstaVivo() || !arboles[arbolObjetivo]->getEstaGerminando())) || (arbolObjetivo == -1)) {
             Random^ r = gcnew Random();
-            arbolObjetivo = r->Next(arboles->Count);
+            arbolObjetivo = r->Next(arboles->Length);
             delete r;
         }
     }
 
-    void irArboles(List<Arbol^>^ arboles) {
+    void irArboles(array<Arbol^>^ arboles) {
         if (enHuida) return;
 
         reiniciarEstado();
@@ -88,7 +88,7 @@ public:
         }
     }
 
-    void manejarMovimiento(List<Arbol^>^ arboles) {
+    void manejarMovimiento(array<Arbol^>^ arboles) {
         if (enHuida) moverInicio();
         else irArboles(arboles);
 
@@ -101,7 +101,7 @@ public:
         return false;
     }
 
-    void sabotear(List<Arbol^>^ arboles, Aliado^ ali) {
+    void sabotear(array<Arbol^>^ arboles, Aliado^ ali) {
         if (arbolObjetivo == -1) return;
 
         bool hayColision = verificarColision(arboles[arbolObjetivo]->getRectangle(), getRectangle());
@@ -133,7 +133,7 @@ public:
             invulnerable = true;
         }
 
-        if (arbolObjetivo == -1 || jugador->getArboles()->Count == 0) return;
+        if (arbolObjetivo == -1 || jugador->getArboles()->Length == 0) return;
 
         if (arbolObjetivo >= 0 && jugador->getArboles()[arbolObjetivo]->getEstaVivo() && !invulnerable)
             jugador->getArboles()[arbolObjetivo]->setContFramesSabotear(jugador->getArboles()[arbolObjetivo]->getContFramesSabotear() - (3 / (1000 / TIEMPO_SLEEP)));

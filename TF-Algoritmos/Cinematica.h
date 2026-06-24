@@ -6,10 +6,10 @@ using namespace System;
 
 ref class Slide {
 private:
-	List<String^>^ texto;
+	array<String^>^ texto;
 	Bitmap^ img;
 public:
-	Slide(List<String^>^ t, Bitmap^ i) {
+	Slide(array<String^>^ t, Bitmap^ i) {
 		img = i;
 		texto = t;
 	}
@@ -20,20 +20,20 @@ public:
 		delete img;
 	}
 
-	List<String^>^ getTexto() { return texto; }
+	array<String^>^ getTexto() { return texto; }
 	Bitmap^ getImg() { return img; }
 };
 
 ref class Cinematica {
 private:
-	List<Slide^>^ cinematica;
+	array<Slide^>^ cinematica;
 	int numSlide;
 	bool enCinematica;
 	bool dibujadoPrimeraVez;
 	bool terminado;
 public:
 	Cinematica() {
-		cinematica = gcnew List<Slide^>();
+		cinematica = gcnew array<Slide^>(0);
 		numSlide = 0;
 		enCinematica = true;
 		dibujadoPrimeraVez = false;
@@ -45,9 +45,20 @@ public:
 		delete cinematica;
 	}
 
-	void agregarSlide(List<String^>^ s, Bitmap^ img) {
+	void agregarSlide(array<String^>^ s, Bitmap^ img) {
 		Slide^ nuevaSlide = gcnew Slide(s, img);
-		cinematica->Add(nuevaSlide);
+
+		if (cinematica == nullptr) {
+			cinematica = gcnew array<Slide^>(1);
+			cinematica[0] = nuevaSlide;
+		}
+		else {
+			int temp = cinematica->Length;
+			array<Slide^>^ nuevo = gcnew array<Slide^>(temp + 1);
+			System::Array::Copy(cinematica, nuevo, temp);
+			nuevo[temp] = nuevaSlide;
+			cinematica = nuevo;
+		}
 	}
 
 	void mostrarSlide(Graphics^ gr, Font^ fuente) {
@@ -64,9 +75,9 @@ public:
 		gr->DrawImage(cinematica[numSlide]->getImg(), 530, 0, 1200 - 530, 514);
 
 		short centrarX = (530 - cinematica[numSlide]->getTexto()[0]->Length * 10) / 2 - 10;
-		short centrarY = (514 - cinematica[numSlide]->getTexto()->Count * 19) / 2;
+		short centrarY = (514 - cinematica[numSlide]->getTexto()->Length * 19) / 2;
 
-		for (int i = 0; i < cinematica[numSlide]->getTexto()->Count; i++) {
+		for (int i = 0; i < cinematica[numSlide]->getTexto()->Length; i++) {
 			gr->DrawString(
 				cinematica[numSlide]->getTexto()[i],
 				fuente,
@@ -79,9 +90,9 @@ public:
 		delete perga;
 	}
 
-	void manejarCambioSlide(Graphics^ gr, Font^ fuente, bool tDerecha, bool tDerechaAnterior, bool tIzquierda, bool tIzquierdaAnterior, bool tEscape) {
+	void manejarCambioSlide(Graphics^ gr, Font^ fuente, bool tDerecha, bool& tDerechaAnterior, bool& tIzquierda, bool tIzquierdaAnterior, bool tEscape) {
 		if (tDerecha && !tDerechaAnterior) {
-			if (numSlide >= cinematica->Count - 1) {
+			if (numSlide >= cinematica->Length - 1) {
 				enCinematica = false;
 				terminado = true;
 			}
@@ -89,10 +100,12 @@ public:
 				numSlide++;
 				mostrarSlide(gr, fuente);
 			}
+			tDerechaAnterior = tDerecha;
 		}
 		else if (tIzquierda && (numSlide > 0) && !tIzquierdaAnterior) {
 			numSlide--;
 			mostrarSlide(gr, fuente);
+			tIzquierdaAnterior = tIzquierda;
 		}
 		else if (tEscape) {
 			enCinematica = false;

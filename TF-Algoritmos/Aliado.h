@@ -38,8 +38,8 @@ public:
 		determinarDireccion();
 	}
 
-	void manejarEstados(bool teclaQ) {
-		if (!teclaQ) return;
+	void manejarEstados(bool teclaQ, bool teclaQAnt) {
+		if (!teclaQ || teclaQAnt) return;
 
 		if (estado == "seguir") {
 			estado = "parar";

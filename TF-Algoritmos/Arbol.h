@@ -9,6 +9,7 @@ private:
 	int alto, ancho;
 	bool vivo;
 	bool germinando;
+	bool marcadorCrecer;
 	bool siendoSaboteado;
 	int contadorGerminar;
 	int contadorSabotear;
@@ -36,6 +37,7 @@ public:
 		vivo = true;
 		germinando = true;
 		siendoSaboteado = false;
+		marcadorCrecer = false;
 		contadorGerminar = 0;
 		contadorSabotear = 0;
 		contFramesGerminar = 0;
@@ -130,6 +132,8 @@ public:
 	bool getEstaGerminando() { return germinando; }
 	void setSiendoSabotead(bool p) { siendoSaboteado = p; }
 	bool getSiendoSaboteado() { return siendoSaboteado; }
+	void setMarcadorCrecer(bool p) { marcadorCrecer = p; }
+	bool getMarcadorCrecer() { return marcadorCrecer; }
 
 	int getContFramesSabotear() { return contFramesSabotear; }
 	void setContFramesSabotear(int p) { contFramesSabotear = p; }
