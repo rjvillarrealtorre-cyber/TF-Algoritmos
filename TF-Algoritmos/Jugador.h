@@ -17,7 +17,6 @@ private:
 	array<Arbol^>^ arboles;
 	int totalArbolesGerminados;
 	//Nivel 3
-	bool enBote;
 public:
 	Jugador(int px, int py, int v) : Entidad(px, py, v) {
 		//Sprites
@@ -41,14 +40,25 @@ public:
 		tEscape = false;
 		tDerechaAnterior = tIzquierdaAnterior = false;
 		semillas = 6; // TEMPORAL
-		enBote = false;
 		tiempoInvulnerabilidad = 2;
 		arboles = gcnew array<Arbol^>(0);
+
+		activarEnBote();
 	}
 
 	~Jugador() {
         for (int i = 0; i < arboles->Length; i++) delete arboles[i];
 		delete arboles;
+	}
+
+	void activarEnBote() {
+		enBote = true;
+		escala = 0.25;
+
+		for (int i = 0; i < sprites->Length; i++) {
+			delete sprites[i];
+			sprites[i] = gcnew Sprite(gcnew Bitmap("sprites\\protagonista\\bote.png"), true);
+		}
 	}
 
 	void plantarArbol(bool teclaE, bool teclaEAnt) {

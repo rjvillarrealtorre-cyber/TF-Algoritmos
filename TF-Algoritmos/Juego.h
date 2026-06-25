@@ -32,7 +32,7 @@ private:
 	array<bool>^ teclasOpcionesAnterior;
 public:
 	Juego() {
-		jugador = gcnew Jugador(300, 250, 14);
+		jugador = gcnew Jugador(300, 250, 10);
 		niveles = gcnew array<Nivel^>(0);
 		fuente = gcnew Fuente();
 		contador = 0;
@@ -45,7 +45,8 @@ public:
 		teclasOpcionesAnterior = gcnew array<bool>(4) { false, false, false, false };
        //Setup FINAL
 		//niveles->Add(setupNivel1());
-		agregarNivel(setupNivel2());
+		//agregarNivel(setupNivel2());
+		agregarNivel(setupNivel3());
 
 		hud = gcnew Hud();
 	}
@@ -165,6 +166,16 @@ public:
 				->getMapaActual()]->getAliados()[0]);
 		}
 
+		//EnemigoBote (nivel 3)
+		for each (EnemigoBote ^ eb in niveles[nivelActual]->getMapas()[niveles[nivelActual]
+			->getMapaActual()]->getEnemigosBote()) {
+			eb->manejarEnemigoBote(gr, jugador);
+		}
+
+		if(true)
+			niveles[nivelActual]->getMapas()[niveles[nivelActual]->getMapaActual()]
+				->getManejoObstaculos()->manejarObstaculos(gr, jugador);
+
 		//Jugador
 		jugador->plantarArbol(teclaE, teclaEAnt);
 		jugador->manejarMovimiento();
@@ -183,7 +194,7 @@ public:
 		);
 
 		//Evento (nivel 2)
-		if (true) {
+		if (false) {
 			niveles[nivelActual]->getMapas()[niveles[nivelActual]
 				->getMapaActual()]->manejarEventos();
 			bool terminara = jugador->verPorArboles();

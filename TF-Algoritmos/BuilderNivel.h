@@ -54,6 +54,15 @@ Mapa^ setupMapaNivel2() {
     return mapa;
 }
 
+Mapa^ setupMapaNivel3() {
+    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl3.jpg"));
+
+    // Coords del jugador: 800, 205
+    mapa->agregarEnemigoBote(gcnew EnemigoBote(50, 300, 10));
+
+    return mapa;
+}
+
 Nivel^ setupNivel1() {
     // ------------------- Final ----------------
 
@@ -76,6 +85,19 @@ Nivel^ setupNivel2() {
     Nivel^ nvl = gcnew Nivel();
 
     nvl->agregarMapa(setupMapaNivel2());
+
+    nvl->agregarCinematica(setupCinNvl2Inicio());
+    nvl->agregarCinematica(setupCinNvl2Final());
+
+    return nvl;
+}
+
+Nivel^ setupNivel3() {
+    // ------------------- Final ----------------
+
+    Nivel^ nvl = gcnew Nivel();
+
+    nvl->agregarMapa(setupMapaNivel3());
 
     nvl->agregarCinematica(setupCinNvl2Inicio());
     nvl->agregarCinematica(setupCinNvl2Final());

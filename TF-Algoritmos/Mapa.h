@@ -1,6 +1,8 @@
 #pragma once
 #include "Aliado.h"
 #include "Talador.h"
+#include "EnemigoBote.h"
+#include "Obstaculo.h"
 
 using namespace System::Collections::Generic;
 
@@ -11,6 +13,8 @@ private:
 	array<EntidadEstatica^>^ entEstaticas;
 	array<Aliado^>^ aliados;
 	array<Talador^>^ taladores;
+	array<EnemigoBote^>^ enemigosBote;
+	ManejoObstaculos^ manejoObstaculos;
 
 	int contador;
 public:
@@ -20,6 +24,8 @@ public:
 		aliados = gcnew array<Aliado^>(0);
 		entEstaticas = gcnew array<EntidadEstatica^>(0);
 		taladores = gcnew array<Talador^>(0);
+		enemigosBote = gcnew array<EnemigoBote^>(0);
+		manejoObstaculos = gcnew ManejoObstaculos();
 	}
 
 	~Mapa() {
@@ -30,6 +36,9 @@ public:
 		delete aliados;
 		for each (Talador ^ tala in taladores) delete tala;
 		delete taladores;
+		for each (EnemigoBote ^ eb in enemigosBote) delete eb;
+		delete taladores;
+		delete manejoObstaculos;
 	}
 
 	void dibujarFondo(Graphics^ gr) {
@@ -74,6 +83,17 @@ public:
 		taladores = tmp;
 	}
 
+	void agregarEnemigoBote(EnemigoBote^ eb) {
+		int oldLen = enemigosBote->Length;
+		array<EnemigoBote^>^ tmp = gcnew array<EnemigoBote^>(oldLen + 1);
+		for (int i = 0; i < oldLen; i++) tmp[i] = enemigosBote[i];
+		tmp[oldLen] = eb;
+		enemigosBote = tmp;
+	}
+
+	ManejoObstaculos^ getManejoObstaculos() { return manejoObstaculos; }
+
+	array<EnemigoBote^>^ getEnemigosBote() { return enemigosBote; }
 	array<EntidadEstatica^>^ getEntEstaticas() { return entEstaticas; }
 	array<Aliado^>^ getAliados() { return aliados; }
 	array<Talador^>^ getTaladores() { return taladores; }

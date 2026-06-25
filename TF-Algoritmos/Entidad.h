@@ -26,6 +26,8 @@ protected:
 	bool invulnerable;
 	int contadorInvulnerabilidad;
 	int tiempoInvulnerabilidad;
+
+	bool enBote;
 public:
 	Entidad(int px, int py, int v) {
 		escala = 1.6;
@@ -34,6 +36,7 @@ public:
 		moviendose = false;
 		direccionActual = Quieto;
 		invulnerable = false;
+		enBote = false;
 	}
 
 	~Entidad() {
@@ -73,7 +76,7 @@ public:
 			break;
 		}
 
-		if (direccionActual != Quieto) {
+		if (direccionActual != Quieto && !enBote) {
 			sprites[direccionActual]->frames++;
 			if (sprites[direccionActual]->frames > 5) sprites[direccionActual]->frames = 0;
 		}
@@ -111,7 +114,7 @@ public:
 	}
 
 	Rectangle getRectangle() {
-		return Rectangle(x, y, sprites[direccionActual]->ancho, sprites[direccionActual]->alto);
+		return Rectangle(x, y, sprites[direccionActual]->ancho * escala, sprites[direccionActual]->alto * escala);
 	}
 
 	void manejarContador() {
