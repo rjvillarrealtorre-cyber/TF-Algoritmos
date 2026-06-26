@@ -162,4 +162,5 @@ public:
 	bool getEnBote() { return enBote; }
 	int getContadorInvulnerabilidad() { return contadorInvulnerabilidad; }
 	array<Arbol^>^ getArboles() { return arboles; }
+	int getTotalArbolesGerminados() { return totalArbolesGerminados; }
 };

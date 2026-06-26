@@ -110,8 +110,7 @@ public:
 				niveles[nivelActual] = setupNivel2();
 				break;
 			case 2:
-				// FALTA
-				// niveles[nivelActual] = setupNivel3();
+				niveles[nivelActual] = setupNivel3();
 				break;
 			}
 
@@ -121,8 +120,28 @@ public:
 		delete md;
 	}
 
+	void manejarDerrota() {
+		if (jugador->getVida() <= 0) enDerrota = true;
+
+		//Nivel 2
+		if (nivelActual != 1) return;
+
+		int arbolesCrecidos = jugador->getTotalArbolesGerminados();
+		int arbolesGerminando = 0;
+		for (int i = 0; i < jugador->getArboles()->Length; i++) {
+			if (jugador->getArboles()[i]->getMarcadorCrecer()) continue;
+
+			if (jugador->getArboles()[i]->getEstaVivo() && jugador->getArboles()[i]->getEstaGerminando())
+				arbolesGerminando++;
+		}
+
+		if (arbolesCrecidos < 4 && jugador->getSemillas() <= 0 && arbolesGerminando < 4)
+			enDerrota = true;
+	}
+
 	void manejarBuclePrincipal(Graphics^ gr) {
 		//Derrota
+		manejarDerrota();
 		mostrarVentanaDerrota(gr);
 		if (enDerrota) return;
 		//Cinematica
@@ -201,7 +220,10 @@ public:
 
 			if (terminara) puedeAcabarNivel = true;
 		}
-			
+		
+		// Finalizar (nivel 3)
+		if (niveles[nivelActual]->getMapas()[niveles[nivelActual]
+			->getMapaActual()]->getContador() * CONVERSOR_SEG > 60) puedeAcabarNivel = true;
 
 		//Otros
 		for (int i = 0; i < 4; i++) teclasOpcionesAnterior[i] = teclasOpciones[i];
@@ -210,6 +232,8 @@ public:
 
 		//Contadores
 		jugador->manejarContador();
+		niveles[nivelActual]->getMapas()[niveles[nivelActual]
+			->getMapaActual()]->manejarContador();
 
 		contador++;
 	}

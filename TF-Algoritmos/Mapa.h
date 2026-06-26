@@ -45,11 +45,13 @@ public:
 		gr->DrawImage(fondo, 0, 0, 900, 514);
 	}
 
+	void manejarContador() {
+		contador++;
+	}
+
 	void manejarEventos() {
 		//Por ahora, el único evento es el tercer talador
 		// del nivel 2
-		contador++;
-
         if (contador == 30 * CONVERSOR_CONT) {
 			int oldLen = taladores->Length;
 			array<Talador^>^ tmp = gcnew array<Talador^>(oldLen + 1);
@@ -91,6 +93,7 @@ public:
 		enemigosBote = tmp;
 	}
 
+	int getContador() { return contador; }
 	ManejoObstaculos^ getManejoObstaculos() { return manejoObstaculos; }
 
 	array<EnemigoBote^>^ getEnemigosBote() { return enemigosBote; }

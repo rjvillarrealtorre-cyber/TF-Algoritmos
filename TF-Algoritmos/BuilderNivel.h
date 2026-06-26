@@ -99,8 +99,8 @@ Nivel^ setupNivel3() {
 
     nvl->agregarMapa(setupMapaNivel3());
 
-    nvl->agregarCinematica(setupCinNvl2Inicio());
-    nvl->agregarCinematica(setupCinNvl2Final());
+    nvl->agregarCinematica(setupCinNvl3Inicio());
+    nvl->agregarCinematica(setupCinNvl3Final());
 
     return nvl;
 }
