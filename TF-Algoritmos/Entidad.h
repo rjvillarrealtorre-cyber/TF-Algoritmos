@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 #include "Sprite.h"
 #include "Utilidades.h"
 
@@ -29,14 +30,28 @@ protected:
 
 	bool enBote;
 public:
-	Entidad(int px, int py, int v) {
+	Entidad(int px, int py) {
 		escala = 1.6;
 		x = px; y = py;
-		velocidad = v;
 		moviendose = false;
 		direccionActual = Quieto;
 		invulnerable = false;
 		enBote = false;
+
+		// Leer velocidad
+		std::ifstream variables("archivos\\Parametros.txt");
+		if (variables.is_open()) {
+			int trash, tempVel;
+			variables >> trash;
+			variables >> trash;
+			variables >> tempVel;
+			variables >> trash;
+			variables >> trash;
+
+			velocidad = tempVel;
+
+			variables.close();
+		}
 	}
 
 	~Entidad() {
@@ -83,14 +98,14 @@ public:
 	}
 
 	virtual void mostrar(Graphics^ gr) {
-		Rectangle origen(
+		System::Drawing::Rectangle origen(
 			sprites[direccionActual]->frames * sprites[direccionActual]->ancho,
 			0,
 			sprites[direccionActual]->ancho,
 			sprites[direccionActual]->alto
 		);
 
-		Rectangle destino(
+		System::Drawing::Rectangle destino(
 			x,
 			y,
 			sprites[direccionActual]->ancho * escala,
@@ -113,8 +128,8 @@ public:
 		}
 	}
 
-	Rectangle getRectangle() {
-		return Rectangle(x, y, sprites[direccionActual]->ancho * escala, sprites[direccionActual]->alto * escala);
+	System::Drawing::Rectangle getRectangle() {
+		return System::Drawing::Rectangle(x, y, sprites[direccionActual]->ancho * escala, sprites[direccionActual]->alto * escala);
 	}
 
 	void manejarContador() {

@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 #include "Entidad.h"
 #include "Arbol.h"
 
@@ -10,15 +11,16 @@ private:
 	bool tDerecha, tIzquierda, tArriba, tAbajo;
 	bool tDerechaAnterior, tIzquierdaAnterior;
 	bool tEscape;
-	int vida;
+	int vida, vidaO;
 	int confianza, conLengua, evidencia;
 	//Nivel 2
 	int semillas;
+	int semillasARecibir;
 	array<Arbol^>^ arboles;
 	int totalArbolesGerminados;
 	//Nivel 3
 public:
-	Jugador(int px, int py, int v) : Entidad(px, py, v) {
+	Jugador(int px, int py) : Entidad(px, py) {
 		//Sprites
 		sprites = gcnew array<Sprite^>(9);
 		sprites[Quieto] = gcnew Sprite(gcnew Bitmap("sprites\\protagonista\\player_idle.png"), true);
@@ -31,24 +33,50 @@ public:
 		sprites[Noreste] = gcnew Sprite(gcnew Bitmap("sprites\\protagonista\\player_walkingsheet_northeast.png"));
 		sprites[Noroeste] = gcnew Sprite(gcnew Bitmap("sprites\\protagonista\\player_walkingsheet_northwest.png"));
 
+		//Abrir Parametros.txt
+		std::ifstream variables("archivos\\Parametros.txt");
+		if (variables.is_open()) {
+			int trash = 0;
+			int tempVida, tempVelocidad, tempSemillas;
+
+			variables >> tempVida;
+			variables >> tempVelocidad;
+			variables >> trash;
+			variables >> tempSemillas;
+			variables >> trash;
+
+			vida = tempVida;
+			velocidad = tempVelocidad;
+			semillasARecibir = tempSemillas;
+
+			variables.close();
+		}
+
+		vidaO = vida;
 		//Otros
-		vida = 100;
-		confianza = 100;
+		confianza = 0;
 		conLengua = 0;
 		evidencia = 0;
 		totalArbolesGerminados = 0;
 		tEscape = false;
 		tDerechaAnterior = tIzquierdaAnterior = false;
-		semillas = 6; // TEMPORAL
 		tiempoInvulnerabilidad = 2;
 		arboles = gcnew array<Arbol^>(0);
-
-		activarEnBote();
 	}
 
 	~Jugador() {
         for (int i = 0; i < arboles->Length; i++) delete arboles[i];
 		delete arboles;
+	}
+
+	void restartArboles() {
+		for (int i = 0; i < arboles->Length; i++) delete arboles[i];
+		delete arboles;
+		arboles = gcnew array<Arbol^>(0);
+	}
+
+	void restartVida() {
+		vida = vidaO;
 	}
 
 	void activarEnBote() {
@@ -163,4 +191,5 @@ public:
 	int getContadorInvulnerabilidad() { return contadorInvulnerabilidad; }
 	array<Arbol^>^ getArboles() { return arboles; }
 	int getTotalArbolesGerminados() { return totalArbolesGerminados; }
+	int getSemillasARecibir() { return semillasARecibir; }
 };

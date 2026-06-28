@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 
 using namespace System::Drawing;
 
@@ -18,9 +19,24 @@ public:
         ancho = img->Width * escala;
         alto = img->Height * escala;
         activo = true;
-        // DEFINIR DAÑO
         x = px; y = py;
         velocidad = v;
+
+        std::ifstream variables("archivos\\Parametros.txt");
+
+        if (variables.is_open()) {
+            int trash, tempDano;
+            
+            variables >> trash;
+            variables >> trash;
+            variables >> trash;
+            variables >> trash;
+            variables >> tempDano;
+
+            dano = tempDano;
+
+            variables.close();
+        }
     }
 
     ~Prop() {
@@ -35,7 +51,7 @@ public:
         gr->DrawImage(img, x, y, ancho, alto);
     }
 
-    Rectangle getRectangle() { return Rectangle(x, y, ancho, alto); }
+    System::Drawing::Rectangle getRectangle() { return System::Drawing::Rectangle(x, y, ancho, alto); }
 
     bool getActivo() { return activo; }
     float getX() { return x; }

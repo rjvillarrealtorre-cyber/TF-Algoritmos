@@ -1,7 +1,10 @@
 #pragma once
+
 #include "VenPrin.h"
 #include "VenCreditos.h"
+#include "VenPuntajes.h"
 #include "MenuC.h"
+#include "Opciones.h"
 
 namespace TFAlgoritmos {
 
@@ -29,9 +32,10 @@ namespace TFAlgoritmos {
 			menuPrin = gcnew MenuC(gcnew Bitmap("sprites\\menu\\principal.png"));
 
 			//Principal
-			btnJugar = Rectangle(370, 265, 286, 43);
-			btnSalir = Rectangle(390, 430, 247, 43);
-			btnCreditos = Rectangle(389, 378, 247, 43);
+			btnJugar = System::Drawing::Rectangle(370, 265, 286, 43);
+			btnPuntajes = System::Drawing::Rectangle(390, 330, 247, 43);
+			btnSalir = System::Drawing::Rectangle(390, 430, 247, 43);
+			btnCreditos = System::Drawing::Rectangle(389, 378, 247, 43);
 		}
 
 	protected:
@@ -57,9 +61,10 @@ namespace TFAlgoritmos {
 		BufferedGraphics^ buffer;
 		MenuC^ menuPrin;
 
-		Rectangle btnJugar;
-		Rectangle btnSalir;
-		Rectangle btnCreditos;
+		System::Drawing::Rectangle btnJugar;
+		System::Drawing::Rectangle btnPuntajes;
+		System::Drawing::Rectangle btnSalir;
+		System::Drawing::Rectangle btnCreditos;
 
 		System::ComponentModel::Container^ components;
 
@@ -98,13 +103,25 @@ namespace TFAlgoritmos {
 		Point p(e->X, e->Y);
 
 		if (btnJugar.Contains(p)) {
-			VenPrin^ venPrin = gcnew VenPrin();
+			Opciones^ opc = gcnew Opciones();
 
 			this->Hide();
 
-			venPrin->ShowDialog();
+			opc->ShowDialog();
 
+			VenPrin^ venPrin = gcnew VenPrin();
+			
+			venPrin->ShowDialog();
+			
 			this->Close();
+		}
+		else if (btnPuntajes.Contains(p)) {
+			this->Hide();
+
+			VenPuntajes^ ven = gcnew VenPuntajes();
+			ven->ShowDialog();
+
+			this->Show();
 		}
 		else if (btnCreditos.Contains(p)) {
 			this->Hide();

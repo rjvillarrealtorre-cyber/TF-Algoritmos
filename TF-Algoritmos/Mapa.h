@@ -21,11 +21,7 @@ public:
 	Mapa(Bitmap^ f) {
 		fondo = f;
 
-		aliados = gcnew array<Aliado^>(0);
-		entEstaticas = gcnew array<EntidadEstatica^>(0);
-		taladores = gcnew array<Talador^>(0);
-		enemigosBote = gcnew array<EnemigoBote^>(0);
-		manejoObstaculos = gcnew ManejoObstaculos();
+		setupMapa();
 	}
 
 	~Mapa() {
@@ -39,6 +35,14 @@ public:
 		for each (EnemigoBote ^ eb in enemigosBote) delete eb;
 		delete taladores;
 		delete manejoObstaculos;
+	}
+
+	void setupMapa() {
+		aliados = gcnew array<Aliado^>(0);
+		entEstaticas = gcnew array<EntidadEstatica^>(0);
+		taladores = gcnew array<Talador^>(0);
+		enemigosBote = gcnew array<EnemigoBote^>(0);
+		manejoObstaculos = gcnew ManejoObstaculos();
 	}
 
 	void dibujarFondo(Graphics^ gr) {

@@ -57,7 +57,6 @@ Mapa^ setupMapaNivel2() {
 Mapa^ setupMapaNivel3() {
     Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl3.jpg"));
 
-    // Coords del jugador: 800, 205
     mapa->agregarEnemigoBote(gcnew EnemigoBote(50, 300, 10));
 
     return mapa;

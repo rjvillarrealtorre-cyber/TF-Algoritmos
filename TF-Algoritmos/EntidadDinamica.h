@@ -5,7 +5,7 @@ ref class EntidadDinamica : public Entidad {
 protected:
 	bool movDerecha, movIzquierda, movArriba, movAbajo;
 public:
-	EntidadDinamica(int px, int py, int v) : Entidad(px, py, v) {
+	EntidadDinamica(int px, int py, int v) : Entidad(px, py) {
 		movDerecha = movIzquierda = movAbajo = movArriba = false;
 	}
 

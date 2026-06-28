@@ -20,7 +20,7 @@ private:
 
 	int multiplicadorSabotaje; // # enemigos en el árbol
 public:
-	Arbol(int px, int py) : Entidad(px, py, 0) {
+	Arbol(int px, int py) : Entidad(px, py) {
 		x = px; y = py;
 
 		sprites = gcnew array<Sprite^>(4);
@@ -48,7 +48,7 @@ public:
 	void mover() override {}
 
 	void mostrar(Graphics^ gr) override {
-		Rectangle destino(
+		System::Drawing::Rectangle destino(
 			x,
 			y,
 			ancho,

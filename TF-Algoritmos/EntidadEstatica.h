@@ -14,9 +14,9 @@ private:
 	bool mostrandoCuadroDialogo;
 	Point^ coordCuadro;
 public:
-	EntidadEstatica(int px, int py, Bitmap^ bmp, ArbolDialogo^ ar) : Entidad(px, py, 0) {
-		sprites = gcnew array<Sprite^>(1);
-		sprites[0] = gcnew Sprite(bmp, true);
+	EntidadEstatica(int px, int py, Bitmap^ bmp, ArbolDialogo^ ar) : Entidad(px, py) {
+		sprites = gcnew array<Sprite^>(9);
+		for(int i = 0; i < 9; i++) sprites[i] = gcnew Sprite(bmp, true);
 		mostrandoCuadroDialogo = false;
 		arbol = gcnew ArbolDialogo();
 		coordCuadro = gcnew Point(0, 0);

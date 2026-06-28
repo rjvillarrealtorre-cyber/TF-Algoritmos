@@ -32,7 +32,7 @@ private:
 	array<bool>^ teclasOpcionesAnterior;
 public:
 	Juego() {
-		jugador = gcnew Jugador(300, 250, 10);
+		jugador = gcnew Jugador(300, 250);
 		niveles = gcnew array<Nivel^>(0);
 		fuente = gcnew Fuente();
 		contador = 0;
@@ -43,9 +43,9 @@ public:
 		cinFinalIniciada = false;
 		teclasOpciones = gcnew array<bool>(4) { false, false, false, false };
 		teclasOpcionesAnterior = gcnew array<bool>(4) { false, false, false, false };
-       //Setup FINAL
-		//niveles->Add(setupNivel1());
-		//agregarNivel(setupNivel2());
+        //Setup FINAL
+		agregarNivel(setupNivel1());
+		agregarNivel(setupNivel2());
 		agregarNivel(setupNivel3());
 
 		hud = gcnew Hud();
@@ -76,8 +76,18 @@ public:
 		nivelActual++;
 
 		if (nivelActual == 1) {
-			jugador->setX(50);
-			jugador->setY(50);
+			jugador->setX(800);
+			jugador->setY(205);
+
+			jugador->setSemillas(jugador->getSemillasARecibir());
+		}
+		else if (nivelActual == 2) {
+			jugador->restartVida();
+			jugador->activarEnBote();
+			jugador->restartArboles();
+
+			jugador->setX(150);
+			jugador->setY(205);
 		}
 
 		puedeAcabarNivel = false;
@@ -96,6 +106,7 @@ public:
 	void mostrarVentanaDerrota(Graphics^ gr) {
 		if (!enDerrota) return;
 
+		gr->Clear(Color::Black);
 		Bitmap^ md = gcnew Bitmap("sprites\\menu\\derrota.jpg");
 		gr->DrawImage(md, 88, 0, 1024, 514);
 
@@ -108,9 +119,20 @@ public:
 				break;
 			case 1:
 				niveles[nivelActual] = setupNivel2();
+				jugador->restartArboles();
+				jugador->restartVida();
+
+				jugador->setX(800);
+				jugador->setY(205);
+
+				jugador->setSemillas(jugador->getSemillasARecibir());
 				break;
 			case 2:
 				niveles[nivelActual] = setupNivel3();
+				jugador->restartVida();
+
+				jugador->setX(250);
+				jugador->setY(205);
 				break;
 			}
 
@@ -191,7 +213,7 @@ public:
 			eb->manejarEnemigoBote(gr, jugador);
 		}
 
-		if(true)
+		if(nivelActual == 2)
 			niveles[nivelActual]->getMapas()[niveles[nivelActual]->getMapaActual()]
 				->getManejoObstaculos()->manejarObstaculos(gr, jugador);
 
@@ -213,7 +235,7 @@ public:
 		);
 
 		//Evento (nivel 2)
-		if (false) {
+		if (nivelActual == 1) {
 			niveles[nivelActual]->getMapas()[niveles[nivelActual]
 				->getMapaActual()]->manejarEventos();
 			bool terminara = jugador->verPorArboles();
@@ -264,4 +286,5 @@ public:
 	}
 	array<bool>^ getTeclasOpciones() { return teclasOpciones; }
 	array<bool>^ getTeclasOpcionesAnterior() { return teclasOpcionesAnterior; }
+	int getContador() { return contador; }
 };
