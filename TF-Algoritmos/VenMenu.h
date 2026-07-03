@@ -14,6 +14,7 @@ namespace TFAlgoritmos {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Media;
 
 	/// <summary>
 	/// Resumen de VenMenu
@@ -36,6 +37,11 @@ namespace TFAlgoritmos {
 			btnPuntajes = System::Drawing::Rectangle(390, 330, 247, 43);
 			btnSalir = System::Drawing::Rectangle(390, 430, 247, 43);
 			btnCreditos = System::Drawing::Rectangle(389, 378, 247, 43);
+
+			musica = gcnew SoundPlayer();
+			musica->SoundLocation = "archivos\\bgm_action_0.wav";
+			musica->Load();
+			musica->PlayLooping();
 		}
 
 	protected:
@@ -51,6 +57,7 @@ namespace TFAlgoritmos {
 			delete gr;
 			delete buffer;
 			delete menuPrin;
+			delete musica;
 		}
 
 	private:
@@ -60,6 +67,7 @@ namespace TFAlgoritmos {
 		Graphics^ gr;
 		BufferedGraphics^ buffer;
 		MenuC^ menuPrin;
+		SoundPlayer^ musica;
 
 		System::Drawing::Rectangle btnJugar;
 		System::Drawing::Rectangle btnPuntajes;
@@ -106,6 +114,8 @@ namespace TFAlgoritmos {
 			Opciones^ opc = gcnew Opciones();
 
 			this->Hide();
+
+			musica->Stop();
 
 			opc->ShowDialog();
 

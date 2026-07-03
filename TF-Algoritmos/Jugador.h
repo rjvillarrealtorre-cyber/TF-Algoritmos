@@ -4,7 +4,7 @@
 #include "Arbol.h"
 
 using namespace System;
-using namespace System::Collections::Generic;
+
 
 ref class Jugador : public Entidad {
 private:
@@ -54,7 +54,7 @@ public:
 
 		vidaO = vida;
 		//Otros
-		confianza = 0;
+		confianza = 100;
 		conLengua = 0;
 		evidencia = 0;
 		totalArbolesGerminados = 0;
@@ -143,7 +143,14 @@ public:
 		return false;
 	}
 
-	void manejarMovimiento() {
+	void manejarMovimiento(Point superior, Point inferior) {
+		//280 185 , 890 + 50 420
+		if (tIzquierda && x <= superior.X) tIzquierda = false;
+		if (tArriba && y <= superior.Y) tArriba = false;
+
+		if (tDerecha && x >= inferior.X) tDerecha = false;
+		if (tAbajo && y >= inferior.Y) tAbajo = false;
+
 		if (tIzquierda || tAbajo || tDerecha || tArriba) setMov(true);
 		//-------
 		if (tIzquierda && tAbajo) setDir(Suroeste);

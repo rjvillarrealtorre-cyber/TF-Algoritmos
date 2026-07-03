@@ -1,7 +1,8 @@
 #pragma once
 #include "Mapa.h"
 #include "Cinematica.h"
-using namespace System::Collections::Generic;
+
+using namespace System::Media;
 
 ref class Nivel {
 private:
@@ -9,15 +10,12 @@ private:
 	array<Cinematica^>^ cinematicas;
 	int mapaActual;
 	int numCinem;
-public:
-	Nivel(array<Mapa^>^ m) {
-		cinematicas = gcnew array<Cinematica^>(0);
-		mapas = m;
-		mapaActual = 0;
-		numCinem = 0;
-	}
 
-	Nivel() {
+	SoundPlayer^ musica;
+public:
+	Nivel(String^ ruta) {
+		musica = gcnew SoundPlayer();
+		musica->SoundLocation = ruta;
 		cinematicas = gcnew array<Cinematica^>(0);
 		mapas = gcnew array<Mapa^>(0);
 		mapaActual = 0;
@@ -29,6 +27,20 @@ public:
 		delete mapas;
 		for (int i = 0; i < cinematicas->Length; i++) delete cinematicas[i];
 		delete cinematicas;
+		delete musica;
+	}
+
+	void agregarMusica(String^ ruta) {
+		musica->SoundLocation = ruta;
+	}
+
+	void playMusica() {
+		musica->Load();
+		musica->PlayLooping();
+	}
+
+	void detenerMusica() {
+		musica->Stop();
 	}
 
     void agregarMapa(Mapa^ mapaAgregar) {
@@ -48,11 +60,11 @@ public:
 	}
 
 	void manejarCambioMapa(Jugador^ jugador, bool teclaE) {
-		if (jugador->getX() > 800 && teclaE && mapaActual < mapas->Length - 1) {
+		if (jugador->getX() > 900 && mapaActual < mapas->Length - 1) {
 			jugador->setX(50);
 			mapaActual++;
 		}
-		else if (jugador->getX() < 50 && teclaE && mapaActual > 0) {
+		else if (jugador->getX() < 0 && mapaActual > 0) {
 			jugador->setX(850);
 			mapaActual--;
 		}

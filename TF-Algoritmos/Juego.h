@@ -10,7 +10,7 @@
 // BUILDERS
 #include "BuilderNivel.h"
 
-using namespace System::Collections::Generic;
+
 
 ref class Juego {
 private:
@@ -30,6 +30,8 @@ private:
 	bool teclaEAnt, teclaQAnt;
 	array<bool>^ teclasOpciones;
 	array<bool>^ teclasOpcionesAnterior;
+
+	bool acabaIniciar;
 public:
 	Juego() {
 		jugador = gcnew Jugador(300, 250);
@@ -49,6 +51,7 @@ public:
 		agregarNivel(setupNivel3());
 
 		hud = gcnew Hud();
+		acabaIniciar = true;
 	}
 
 	~Juego() {
@@ -73,7 +76,9 @@ public:
 		if (niveles[nivelActual]->getCinematicas()[1]->getEnCinematica() &&
 			!niveles[nivelActual]->getCinematicas()[1]->getTerminado()) return;
 
+		niveles[nivelActual]->detenerMusica();
 		nivelActual++;
+		niveles[nivelActual]->playMusica();
 
 		if (nivelActual == 1) {
 			jugador->setX(800);
@@ -162,6 +167,11 @@ public:
 	}
 
 	void manejarBuclePrincipal(Graphics^ gr) {
+		if (acabaIniciar) {
+			niveles[nivelActual]->playMusica();
+			acabaIniciar = false;
+		}
+
 		//Derrota
 		manejarDerrota();
 		mostrarVentanaDerrota(gr);
@@ -219,7 +229,8 @@ public:
 
 		//Jugador
 		jugador->plantarArbol(teclaE, teclaEAnt);
-		jugador->manejarMovimiento();
+		jugador->manejarMovimiento(niveles[nivelActual]->getMapas()[niveles[nivelActual]->getMapaActual()]->getLimSuperior(),
+			niveles[nivelActual]->getMapas()[niveles[nivelActual]->getMapaActual()]->getLimInferior());
 		jugador->mover();
 
 		jugador->mostrar(gr);
@@ -287,4 +298,5 @@ public:
 	array<bool>^ getTeclasOpciones() { return teclasOpciones; }
 	array<bool>^ getTeclasOpcionesAnterior() { return teclasOpcionesAnterior; }
 	int getContador() { return contador; }
+	int getNivelActual() { return nivelActual; }
 };

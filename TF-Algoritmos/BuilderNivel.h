@@ -5,7 +5,8 @@
 #include "BuilderEntidadEstatica.h"
 
 Mapa^ setupMapa1Nivel1() {
-    Mapa^ mapa1 = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl1mapa1.jpg"));
+    Mapa^ mapa1 = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl1mapa1.jpg"),
+        Point(260, 142), Point(950, 430));
 
     mapa1->agregarEntidadEstatica(setupNINivel1Mapa1Lenador1());
 
@@ -13,7 +14,8 @@ Mapa^ setupMapa1Nivel1() {
 }
 
 Mapa^ setupMapa2Nivel1() {
-    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl1mapa2.jpg"));
+    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl1mapa2.jpg"),
+        Point(-100, 142), Point(950, 430));
 
     mapa->agregarEntidadEstatica(setupNINivel1Mapa2Wilmer());
     mapa->agregarEntidadEstatica(setupNINivel1Mapa2Rosa());
@@ -24,7 +26,8 @@ Mapa^ setupMapa2Nivel1() {
 }
 
 Mapa^ setupMapa3Nivel1() {
-    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl1mapa3.png"));
+    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl1mapa3.png"),
+        Point(-100, 142), Point(950, 430));
 
     mapa->agregarEntidadEstatica(setupNINivel1Mapa3Elena());
     mapa->agregarEntidadEstatica(setupNINivel1Mapa3Silvia());
@@ -34,7 +37,8 @@ Mapa^ setupMapa3Nivel1() {
 }
 
 Mapa^ setupMapa4Nivel1() {
-    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl1mapa4.jpg"));
+    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl1mapa4.jpg"),
+        Point(-100, 142), Point(763, 345));
 
     mapa->agregarEntidadEstatica(setupNINivel1Mapa4Timoteo());
     mapa->agregarEntidadEstatica(setupNINivel1Mapa4Jeremias());
@@ -44,7 +48,8 @@ Mapa^ setupMapa4Nivel1() {
 }
 
 Mapa^ setupMapaNivel2() {
-    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl2.jpg"));
+    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl2.jpg"),
+        Point(145, 83), Point(899, 430));
 
     // Coords del jugador: 800, 205
     mapa->agregarAliado(gcnew Aliado(740, 230, 10));
@@ -55,7 +60,8 @@ Mapa^ setupMapaNivel2() {
 }
 
 Mapa^ setupMapaNivel3() {
-    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl3.jpg"));
+    Mapa^ mapa = gcnew Mapa(gcnew Bitmap("sprites\\escenarios\\nvl3.jpg"),
+        Point(260, 155), Point(899, 430));
 
     mapa->agregarEnemigoBote(gcnew EnemigoBote(50, 300, 10));
 
@@ -65,7 +71,7 @@ Mapa^ setupMapaNivel3() {
 Nivel^ setupNivel1() {
     // ------------------- Final ----------------
 
-    Nivel^ nvl = gcnew Nivel();
+    Nivel^ nvl = gcnew Nivel("archivos\\bgm_action_1.wav");
 
     nvl->agregarMapa(setupMapa1Nivel1());
     nvl->agregarMapa(setupMapa2Nivel1());
@@ -81,7 +87,7 @@ Nivel^ setupNivel1() {
 Nivel^ setupNivel2() {
     // ------------------- Final ----------------
 
-    Nivel^ nvl = gcnew Nivel();
+    Nivel^ nvl = gcnew Nivel("archivos\\bgm_action_2.wav");
 
     nvl->agregarMapa(setupMapaNivel2());
 
@@ -94,7 +100,7 @@ Nivel^ setupNivel2() {
 Nivel^ setupNivel3() {
     // ------------------- Final ----------------
 
-    Nivel^ nvl = gcnew Nivel();
+    Nivel^ nvl = gcnew Nivel("archivos\\bgm_action_3.wav");
 
     nvl->agregarMapa(setupMapaNivel3());
 

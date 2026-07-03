@@ -11,7 +11,7 @@ namespace TFAlgoritmos {
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
-	using namespace System::Collections::Generic;
+	
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
@@ -27,7 +27,10 @@ namespace TFAlgoritmos {
 			// Instanciar la fuente antes de inicializar los componentes para usarla en controles
 			fuente = gcnew Fuente();
 			InitializeComponent();
-			entries = gcnew List<Tuple<String^, int, int, int, int>^>();
+            // inicializar arreglo dinámico para entradas
+			entriesCapacity = 16;
+			entries = gcnew array<Tuple<String^, int, int, int, int>^>(entriesCapacity);
+			entriesCount = 0;
 		}
 
 	protected:
@@ -44,12 +47,26 @@ namespace TFAlgoritmos {
 		}
 
 	private:
+       // Añadir una entrada al arreglo dinámico, redimensionando si es necesario
+		void AddEntry(Tuple<String^, int, int, int, int>^ t) {
+			if (entriesCount >= entriesCapacity) {
+				int newCap = entriesCapacity * 2;
+				array<Tuple<String^, int, int, int, int>^>^ newArr = gcnew array<Tuple<String^, int, int, int, int>^>(newCap);
+				for (int i = 0; i < entriesCount; i++) newArr[i] = entries[i];
+				entries = newArr;
+				entriesCapacity = newCap;
+			}
+			entries[entriesCount++] = t;
+		}
+
 		/// <summary>
 		/// Variable del diseñador necesaria.
 		/// </summary>
 		System::ComponentModel::Container ^components;
 		Fuente^ fuente;
-		List<Tuple<String^, int, int, int, int>^>^ entries;
+        array<Tuple<String^, int, int, int, int>^>^ entries;
+		int entriesCount;
+		int entriesCapacity;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -74,8 +91,8 @@ namespace TFAlgoritmos {
 		}
 #pragma endregion
 	private: System::Void VenPuntajes_Load(System::Object^ sender, System::EventArgs^ e) {
-		// Leer el archivo binario y cargar los registros
-		entries->Clear();
+        // Leer el archivo binario y cargar los registros
+		entriesCount = 0;
 		try {
 			std::ifstream ifs("archivos\\Puntajes.bin", std::ios::binary);
 			if (!ifs.is_open()) return;
@@ -104,8 +121,8 @@ namespace TFAlgoritmos {
 				ifs.read(reinterpret_cast<char*>(&c4), sizeof(c4));
 				if (!ifs) break;
 
-				String^ sname = msclr::interop::marshal_as<String^>(name);
-				entries->Add(Tuple::Create(sname, (int)c1, (int)c2, (int)c3, (int)c4));
+                String^ sname = msclr::interop::marshal_as<String^>(name);
+				AddEntry(Tuple::Create(sname, (int)c1, (int)c2, (int)c3, (int)c4));
 			}
 			ifs.close();
 		}
@@ -163,8 +180,8 @@ namespace TFAlgoritmos {
 		x = marginLeft;
 		y += headerHeight + 8;
 
-		int maxVisible = (this->ClientSize.Height - y - 20) / rowHeight;
-		int count = Math::Min((int)entries->Count, maxVisible);
+        int maxVisible = (this->ClientSize.Height - y - 20) / rowHeight;
+		int count = Math::Min(entriesCount, maxVisible);
 
 		const double CONVERSOR_SEG = 75.0 / 1000.0; // cada frame = 75 ms
 
@@ -201,8 +218,8 @@ namespace TFAlgoritmos {
 			g->DrawLine(gridPen, marginLeft - 8, rowY + rowHeight - 4, marginLeft - 8 + nameW + colW * 4 + 16, rowY + rowHeight - 4);
 		}
 
-		// Footer note if empty
-		if (entries->Count == 0) {
+        // Footer note if empty
+		if (entriesCount == 0) {
 			System::Drawing::Font^ noteFont = gcnew System::Drawing::Font(fuente->getFuenteFinal()->FontFamily, 16, FontStyle::Italic);
 			g->DrawString("No hay puntajes registrados.", noteFont, textBrush, (float)marginLeft, (float)(y + 8));
 		}

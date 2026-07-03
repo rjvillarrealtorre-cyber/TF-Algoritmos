@@ -11,6 +11,7 @@ namespace TFAlgoritmos {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Media;
 
 	/// <summary>
 	/// Resumen de VenPrin
@@ -52,6 +53,7 @@ namespace TFAlgoritmos {
 		Graphics^ gr;
 		BufferedGraphics^ buffer;
 		Juego^ juego;
+
 	private: System::Windows::Forms::Timer^ timer1;
 	private: System::ComponentModel::IContainer^ components;
 

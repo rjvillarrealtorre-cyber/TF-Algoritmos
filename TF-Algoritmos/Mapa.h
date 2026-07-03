@@ -4,7 +4,7 @@
 #include "EnemigoBote.h"
 #include "Obstaculo.h"
 
-using namespace System::Collections::Generic;
+
 
 ref class Mapa {
 private:
@@ -16,10 +16,15 @@ private:
 	array<EnemigoBote^>^ enemigosBote;
 	ManejoObstaculos^ manejoObstaculos;
 
+	Point limSuperiorMapa;
+	Point limInferiorMapa;
+
 	int contador;
 public:
-	Mapa(Bitmap^ f) {
+	Mapa(Bitmap^ f, Point lsm, Point lim) {
 		fondo = f;
+		limSuperiorMapa = lsm;
+		limInferiorMapa = lim;
 
 		setupMapa();
 	}
@@ -104,4 +109,6 @@ public:
 	array<EntidadEstatica^>^ getEntEstaticas() { return entEstaticas; }
 	array<Aliado^>^ getAliados() { return aliados; }
 	array<Talador^>^ getTaladores() { return taladores; }
+	Point getLimSuperior() { return limSuperiorMapa; }
+	Point getLimInferior() { return limInferiorMapa; }
 };
