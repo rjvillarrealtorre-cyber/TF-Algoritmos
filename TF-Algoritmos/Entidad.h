@@ -54,10 +54,7 @@ public:
 		}
 	}
 
-	~Entidad() {
-		for (int i = 0; i < sprites->Length; i++) delete sprites[i];
-		delete sprites;
-	}
+	virtual ~Entidad() = 0;
 
 	virtual void mover() {
 		switch (direccionActual) {
@@ -159,3 +156,9 @@ public:
 
 	array<Sprite^>^ getSprites() { return sprites; }
 };
+
+//Más abstracción
+Entidad::~Entidad() {
+	for (int i = 0; i < sprites->Length; i++) delete sprites[i];
+	delete sprites;
+}
