@@ -54,7 +54,7 @@ public:
 
 		vidaO = vida;
 		//Otros
-		confianza = 100;
+		confianza = 0;
 		conLengua = 0;
 		evidencia = 0;
 		totalArbolesGerminados = 0;
